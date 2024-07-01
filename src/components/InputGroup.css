@@ -1,0 +1,48 @@
+.rounded {
+    border: 1px solid #ddd;
+    border-radius: 8pt !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+}
+
+.input-group {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.input-group>* :first {
+    border: 1px solid black;
+}
+
+.input-group>* {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.input-group button {
+    border-radius: 0;
+}
+
+.input-group-prepend {
+    background-color: #eee;
+}
+
+.input-group-append {
+    background-color: #eee;
+}
+
+.input-group-area {
+    width: 100%;
+    background-color: white;
+}
+
+.input-group input {
+    border: 0;
+    display: block;
+    width: 100%;
+    font-size: large;
+    text-align: center;
+    outline: none;
+}

@@ -1,0 +1,82 @@
+.first-color {
+  background: #00204a;
+}
+
+.second-color {
+  background: #005792;
+}
+
+.third-color {
+  background: #00bbf0;
+}
+
+.fourth-color {
+  background: hsl(48, 100%, 50%);
+}
+
+.prominent {
+  background: #005792 !important;
+  border-color: #00bbf0 !important;
+  color: white !important;
+}
+
+.outline-prominent {
+  background: white !important;
+  color: #00204a !important;
+  border: 1px solid #00204a !important;
+}
+
+.default {
+  background-color: #eee !important;
+  border-color: #00bbf0 !important;
+  color: black !important;
+}
+
+.outline-default {
+  background: grey !important;
+  color: #eee !important;
+  border: 1px solid #eee !important;
+}
+
+.warning {
+  background: hsl(48, 100%, 50%);
+  color: black;
+}
+
+.outline-warning {
+  background: white !important;
+  color: hsl(48, 100%, 50%) !important;
+  border: 1px solid #005792 !important;
+}
+
+.danger {
+  background: hsla(0, 100%, 50%, 0.812) !important;
+  color: white;
+}
+
+.outline-danger {
+  background: white !important;
+  color: hsla(0, 100%, 50%, 0.812) !important;
+  border: 1px solid hsla(0, 100%, 50%, 0.812) !important;
+}
+
+.info {
+  background: hsla(193, 100%, 47%, 0.852) !important;
+}
+
+.outline-info {
+  background: white !important;
+  color: hsla(193, 100%, 47%, 0.852) !important;
+  border: 1px solid hsla(193, 100%, 47%, 0.852) !important;
+}
+
+.success {
+  background: hsla(120, 100%, 25%, 0.815);
+  color: white;
+}
+
+.outline-success {
+  background: white !important;
+  color: hsla(120, 100%, 25%, 0.815) !important;
+  border: 1px solid hsla(120, 100%, 25%, 0.815) !important;
+}
