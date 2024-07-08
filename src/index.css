@@ -1,61 +1,54 @@
-.first-color {
-  background: #00204a;
-}
-
-.second-color {
-  background: #005792;
-}
-
-.third-color {
-  background: #00bbf0;
-}
-
-.fourth-color {
-  background: hsl(48, 100%, 50%);
+:root {
+  --theme-first-color: #00204a;
+  --theme-second-color: #005792;
+  --theme-third-color: #00bbf0;
+  --theme-fourth-color: hsl(48, 100%, 50%);
+  --theme-default-color: #eee;
 }
 
 .prominent {
-  background: #005792 !important;
-  border-color: #00bbf0 !important;
+  background: var(--theme-second-color) !important;
+  border-color: var(--theme-third-color) !important;
   color: white !important;
 }
 
 .outline-prominent {
-  background: white !important;
-  color: #00204a !important;
-  border: 1px solid #00204a !important;
+  background: none !important;
+  color: var(--theme-first-color) !important;
+  border: 1px solid var(--theme-first-color) !important;
 }
 
 .default {
-  background-color: #eee !important;
-  border-color: #00bbf0 !important;
+  background-color: var(--theme-default-color) !important;
+  border-color: var(--theme-third-color) !important;
   color: black !important;
 }
 
 .outline-default {
-  background: grey !important;
-  color: #eee !important;
-  border: 1px solid #eee !important;
+  background: none !important;
+  color: var(--theme-third-color) !important;
+  border: 1px solid var(--theme-third-color) !important;
 }
 
 .warning {
-  background: hsl(48, 100%, 50%);
+  background: var(--theme-fourth-color);
   color: black;
 }
 
 .outline-warning {
-  background: white !important;
-  color: hsl(48, 100%, 50%) !important;
-  border: 1px solid #005792 !important;
+  background: none !important;
+  color: var(--theme-fourth-color) !important;
+  border: 1px solid var(--theme-second-color) !important;
 }
 
 .danger {
   background: hsla(0, 100%, 50%, 0.812) !important;
-  color: white;
+  color: var(--theme-default-color);
 }
 
 .outline-danger {
-  background: white !important;
+  background: none !important;
+  /* background: var(--theme-default-color) !important; */
   color: hsla(0, 100%, 50%, 0.812) !important;
   border: 1px solid hsla(0, 100%, 50%, 0.812) !important;
 }
@@ -65,7 +58,8 @@
 }
 
 .outline-info {
-  background: white !important;
+  background: none !important;
+  /* background: var(--theme-default-color) !important; */
   color: hsla(193, 100%, 47%, 0.852) !important;
   border: 1px solid hsla(193, 100%, 47%, 0.852) !important;
 }
@@ -76,7 +70,8 @@
 }
 
 .outline-success {
-  background: white !important;
+  background: none !important;
+  /* background: var(--theme-default-color) !important; */
   color: hsla(120, 100%, 25%, 0.815) !important;
   border: 1px solid hsla(120, 100%, 25%, 0.815) !important;
 }

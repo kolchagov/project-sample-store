@@ -1,9 +1,11 @@
 import './App.css'
 import React from 'react'
 import { useState } from 'react'
-import ProductCard from './components/ProductCard'
+import ProductCard from './components/product-card/ProductCard'
 import Product from './model/Product'
 import Button from './components/Button';
+import Navbar from './components/navigation/navbar/Navbar'
+import Categories from './components/navigation/categories/Categories';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,13 +24,18 @@ function App() {
 
   return (
     <>
+      <Navbar />
+      <Categories />
       <div className='container'>
         <div className='row'>
-          <div className='col col-lg-3'>
+          <div className='col'>
             <ProductCard product={apple} />
           </div>
-          <div className='col col-lg-3'>
+          <div className='col'>
             <ProductCard product={peach} />
+          </div>
+          <div className='col'>
+            <ProductCard product={apple} />
           </div>
           <div className='col col-lg-3'>
             <Button color='prominent'>Test </Button>

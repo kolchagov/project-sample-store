@@ -1,8 +1,12 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## MyMAG project description
+MyMANG is a simple online shop. It's build by me as a project assignment for ReactJS course.
 
-Currently, two official plugins are available:
+## Objectives
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The final code must adhere to project requirements and include both public and private application parts.
+
+## Server used
+
+As backend server the decision was made to use softuni-practice-server (non-persistent). If time allows, other cloud solutions can be used.

@@ -5,7 +5,7 @@
     background: #191919;
     border-radius: 20px;
     overflow: hidden;
-    margin: 6pt;
+    /* margin: 6pt; */
 }
 
 .product-card::before {

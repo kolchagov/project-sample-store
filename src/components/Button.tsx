@@ -5,18 +5,27 @@ type ButtonProps = {
     color?: "prominent" | "secondary" | "info" | "danger" | "warning" | "success" | "default"
     children: ReactNode
     size?: "btn-small" | "btn-medium" | "btn-large",
-    className?: string
-    outline?: string
+    type?: "button" | "submit" | "reset",
+    className?: string,
+    outline?: string,
+    onClickHandler?: () => void,
 }
 
-export default function Button({ color = "prominent", children, size = "btn-medium", className = "",
-    outline
+export default function Button({
+    size = "btn-medium",
+    type = "button",
+    color = "prominent",
+    children,
+    className = "",
+    outline,
+    onClickHandler = () => { },
+    ...otherProps
 }: ButtonProps) {
     let classes = `button ${color} ${size} ${className}`
     if (outline) {
-        classes += `outline-${color}`
+        classes += ` outline-${color}`
     }
     return (
-        <button className={classes}>{children}</button>
+        <button {...otherProps} className={classes} type={type} onClick={onClickHandler}>{children}</button>
     )
 }

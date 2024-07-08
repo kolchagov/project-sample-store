@@ -1,7 +1,7 @@
 .button {
     align-items: center;
     background: #e4e4e4;
-    border: none;
+    border: 1px solid;
     border-radius: 15pt !important;
     box-sizing: border-box;
     cursor: pointer;
@@ -10,6 +10,17 @@
     justify-content: center;
     display: flex;
     min-width: fit-content;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
 }
 
 .btn-medium {
