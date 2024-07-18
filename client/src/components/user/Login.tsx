@@ -1,19 +1,43 @@
 import React, { useState } from 'react'
 import Button from '../Button'
 import { Navigate, redirect } from 'react-router-dom'
+import UserService from '../../services/UserService';
+import Modal from '../dialogs/Modal';
 
 export default function Login() {
-    const [isRegister, setIsRegister] = useState(false)
+    const [isRegister, setIsRegister] = useState(false),
+        [errorMessage, setErrorMessage] = useState('')
+
     function registerButtonClickHandler() {
         console.log("debug me");
         setIsRegister(true)
     }
+
+    async function loginFormSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget)
+        const data = Object.fromEntries(formData)
+
+        try {
+            await UserService.login({ email: data.email, password: data.password });
+        } catch (err) {
+            setErrorMessage("Invalid email or password")
+            console.log(err);
+        }
+    }
+
     return (
         <>
             {isRegister && <Navigate to={'/register'} />}
-            <form action="" className='m-3'>
+            {
+                errorMessage &&
+                <Modal title='Error' dismissModal={() => setErrorMessage('')}>
+                    <p>{errorMessage}</p>
+                </Modal>
+            }
+            <form action="" className='m-3' onSubmit={loginFormSubmitHandler}>
                 <div className="row justify-content-md-center">
-                    <div className="card p-3 col-12 col-md-6 col-lg-5">
+                    <div className="card p-3 col-12 col-md-6 col-lg-5 col-xxl-4">
                         <div className="row">
                             <div className="col">
                                 <div className="input-group mb-3">
@@ -21,6 +45,7 @@ export default function Login() {
                                         <i className="fa fa-envelope"></i>
                                     </span>
                                     <input
+                                        name="email"
                                         type="email"
                                         className="form-control"
                                         placeholder="Email"

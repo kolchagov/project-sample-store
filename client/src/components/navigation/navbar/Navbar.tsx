@@ -4,6 +4,7 @@ import { SyntheticEvent } from "react";
 import './Navbar.css'
 import MenuItem from "../MenuItem";
 import { Link } from "react-router-dom";
+import UserService from "../../../services/UserService";
 
 const navItems = [
     {
@@ -18,13 +19,20 @@ const navItems = [
         name: 'Cart',
         link: '/cart'
     },
-    {
-        name: 'Login',
-        link: '/login'
-    },
 ]
 
 export default function Navbar() {
+    if (UserService.currentUser) {
+        navItems.push({
+            name: 'Logout',
+            link: '/logout'
+        })
+    } else {
+        navItems.push({
+            name: 'Login',
+            link: '/login'
+        })
+    }
     const setHeight = (el: HTMLElement, height: string) => {
         setTimeout(() => {
             el.style.height = height

@@ -2,16 +2,15 @@ async function requester(method: string, url: string, data?: object) {
     const headers = {
         'Content-Type': 'application/json',
     }
-    let body: string | undefined = undefined
     const options = {
         method,
         headers,
-        body,
     }
+    let body: string | undefined
     if (data) {
         body = JSON.stringify(data)
     }
-    const response = await fetch(url, options)
+    const response = await fetch(url, { ...options, body })
     if (response.ok) {
         return response.json()
     } else {

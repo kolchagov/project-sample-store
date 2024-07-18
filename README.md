@@ -25,5 +25,9 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Home page with products
 - Login page with login form
 - Register page with register form
+- Logout page
+
+## 4. Service imaplementations
+- User service implementation
 
 
