@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import Button from '../Button'
+import './Modal.css'
 
 type ModalProps = {
     dismissModal: () => void,

@@ -12,7 +12,11 @@ async function requester(method: string, url: string, data?: object) {
     }
     const response = await fetch(url, { ...options, body })
     if (response.ok) {
-        return response.json()
+        if (response.status !== 204) {
+            return response.json()
+        } else {
+            return true
+        }
     } else {
         throw new Error(response.statusText)
     }

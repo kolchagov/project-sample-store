@@ -20,9 +20,9 @@ export default function ProductDetails({ product, dismissModal }: PoductDetailsP
                         <div className="float-none float-md-start px-2">
                             <img src={product.image} alt={product.name} className="img-responsive mw-100" />
                         </div>
-                        <div className="flex-col">
-                            <h5><strong>{product.name}</strong></h5>
+                        <div className="flex-col text-center mx-3">
                             <h5>Detailed description</h5>
+                            <h5><strong>{product.name}</strong></h5>
                         </div>
                     </div>
                     <div className="clearfix"></div>

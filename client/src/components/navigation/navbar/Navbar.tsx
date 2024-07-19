@@ -8,31 +8,50 @@ import UserService from "../../../services/UserService";
 
 const navItems = [
     {
+        public: true,
         name: 'Home',
         link: '/'
     },
     {
+        public: false,
+        name: 'Add Product',
+        link: '/addProduct'
+    },
+    {
+        public: false,
+        name: 'Add Category',
+        link: '/addCategory'
+    },
+    {
+        public: false,
+        name: 'Edit Users',
+        link: '/users'
+    },
+    {
+        public: true,
+        isInvisibleOnLogin: true,
         name: 'About',
         link: '/about'
     },
     {
+        public: true,
         name: 'Cart',
         link: '/cart'
     },
+    {
+        public: true,
+        isInvisibleOnLogin: true,
+        name: 'Login',
+        link: '/login',
+    },
+    {
+        public: false,
+        name: 'Logout',
+        link: '/logout'
+    }
 ]
 
-export default function Navbar() {
-    if (UserService.currentUser) {
-        navItems.push({
-            name: 'Logout',
-            link: '/logout'
-        })
-    } else {
-        navItems.push({
-            name: 'Login',
-            link: '/login'
-        })
-    }
+export default function Navbar({ isLogged }) {
     const setHeight = (el: HTMLElement, height: string) => {
         setTimeout(() => {
             el.style.height = height
@@ -78,7 +97,12 @@ export default function Navbar() {
                 </div>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        {navItems.map((item, index) => <MenuItem key={index} href={item.link}>{item.name}</MenuItem>)}
+                        {navItems.map((item, index) => {
+                            if ((isLogged && !item.isInvisibleOnLogin) ||
+                                (!isLogged && item.public)) {
+                                return <MenuItem key={index} href={item.link}>{item.name}</MenuItem>
+                            }
+                        })}
                     </ul>
                 </div>
             </div>
