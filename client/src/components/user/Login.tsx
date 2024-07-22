@@ -10,7 +10,6 @@ export default function Login() {
         navigate = useNavigate()
 
     function registerButtonClickHandler() {
-        console.log("debug me");
         navigate('/register')
     }
 

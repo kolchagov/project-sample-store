@@ -27,12 +27,14 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Register page with register form
 - Logout page
 
-## 4. Service imaplementations
+## 4. Service implementations
 - User service implementation: user login
     - Add personalized navigation
-    - Add user list page
     - Add new user
     - Edit user
     - Delete user
-
-
+## 5. Category service implementation:
+    - Add read categories
+    - Add category context
+## 6. Product service implementation:
+    - Added read products 

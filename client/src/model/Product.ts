@@ -13,10 +13,11 @@ class Product {
     public year?: number;
     public price: number;
     public description: string;
-    public categoryId: string;
+    public categoryId?: string;
 
     constructor(product: Product) {
         Object.assign(this, product)
+        this._createdOn = product._createdOn ? new Date(product._createdOn) : new Date()
     }
 }
 

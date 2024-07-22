@@ -1,4 +1,4 @@
-import requester from "./requester";
+import requester from "./Requester";
 import User from '../model/User';
 
 const BASE = "http://localhost:3030/users"

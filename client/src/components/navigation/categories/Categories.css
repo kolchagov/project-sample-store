@@ -27,6 +27,7 @@
 .vertical-menu {
     background-clip: border-box;
     border-radius: 0 0 6pt;
+    cursor: pointer;
     /* border: 1px solid lightgray; */
 }
 

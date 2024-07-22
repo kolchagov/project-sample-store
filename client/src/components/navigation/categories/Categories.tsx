@@ -1,20 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './Categories.css'
+import CategoryContext from '../../../contexts/CategoryContext'
+import Category from '../../../model/Category'
 
 export default function Categories() {
+    const categoryMap = useContext(CategoryContext),
+        categories = Object.values(categoryMap) as [Category]
     return (
         <div className='sidenav'>
             <ul className='vertical-menu list-group'>
-                <li className="">Cat1</li>
-                <li>Cat2</li>
-                <li>Cat3</li>
-                <li>cat 4</li>
-                <li>Cat 5</li>
-                <li>Cat 5</li>
-                <li>Cat 5</li>
-                <li>Cat 5</li>
-                <li>Cat 5</li>
-                <li>Cat 5</li>
+                <li className="text-center bg-black"><strong>Categories</strong></li>
+                {
+                    categories.map((cat, index) => <li key={index}>{cat.name}</li>)
+                }
             </ul>
         </div>
     )

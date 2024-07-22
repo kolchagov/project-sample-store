@@ -10,7 +10,7 @@ type ProductCardProps = {
 
 export default function ProductCard({ product }: ProductCardProps) {
     const euros = Math.floor(product.price),
-        cents = Math.floor(product.price % 1 * 100),
+        cents = ("00" + Math.round(product.price % 1 * 100)).slice(-2),
         [isShowDetails, setIsShowDetails] = useState(false);
     let title = `${product.make} ${product.model}`
 
@@ -19,7 +19,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     }
 
     function handleBuyNowEvent() {
-        console.log("debug me");
+        console.log("debug me TODO implement buy");
     }
     return (
         <>

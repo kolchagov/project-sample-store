@@ -24,7 +24,6 @@ export default function Modal({ dismissModal, children, extraClass, title }: Mod
 
     function closeModalDialog() {
         gallery?.hide()
-        console.log("debug me");
         dismissModal()
     }
 
