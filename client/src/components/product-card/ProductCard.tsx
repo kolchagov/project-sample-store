@@ -12,7 +12,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     const euros = Math.floor(product.price),
         cents = Math.floor(product.price % 1 * 100),
         [isShowDetails, setIsShowDetails] = useState(false);
-    let title = product.name
+    let title = `${product.make} ${product.model}`
 
     if (title.length > 40) {
         title = title.substring(0, 40) + '...';
@@ -25,7 +25,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <>
             <div className="product-card my-2">
                 <div className='imgBox'>
-                    <img src={product.image} alt={product.name} />
+                    <img src={product.img} alt={product.model} />
                 </div>
                 <div className='contentBox'>
                     <h3 className="stroke">{title}</h3>

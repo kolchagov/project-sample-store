@@ -1,9 +1,10 @@
 import './App.css'
 import React, { useEffect } from 'react'
+import { Route, Routes } from 'react-router-dom';
 import { useState } from 'react'
+
 import Navbar from './components/navigation/navbar/Navbar'
 import Categories from './components/navigation/categories/Categories';
-import { Route, Routes } from 'react-router-dom';
 import Home from './components/home/Home'
 import About from './components/about/About'
 import Login from './components/user/Login';

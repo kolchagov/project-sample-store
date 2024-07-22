@@ -18,11 +18,11 @@ export default function ProductDetails({ product, dismissModal }: PoductDetailsP
                 <section className='m-2'>
                     <div className="d-flex align-items-center">
                         <div className="float-none float-md-start px-2">
-                            <img src={product.image} alt={product.name} className="img-responsive mw-100" />
+                            <img src={product.img} alt={product.model} className="img-responsive mw-100" />
                         </div>
                         <div className="flex-col text-center mx-3">
                             <h5>Detailed description</h5>
-                            <h5><strong>{product.name}</strong></h5>
+                            <h5><strong>{product.make} {product.model}</strong></h5>
                         </div>
                     </div>
                     <div className="clearfix"></div>

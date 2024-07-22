@@ -2,16 +2,21 @@
  * This is DTO class for product
  */
 class Product {
-    public name: string;
+    public _createdOn?: Date;
+    public _id?: string;
+    public _ownerId?: string;
+
+    public img: string;
+    public make: string;
+    public model: string;
+    public material?: string;
+    public year?: number;
     public price: number;
     public description: string;
-    public image: string;
+    public categoryId: string;
 
-    constructor(name: string, price: number, description: string, image: string) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.image = image;
+    constructor(product: Product) {
+        Object.assign(this, product)
     }
 }
 

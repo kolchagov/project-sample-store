@@ -29,6 +29,10 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 
 ## 4. Service imaplementations
 - User service implementation: user login
-    - Added personalized navigation
+    - Add personalized navigation
+    - Add user list page
+    - Add new user
+    - Edit user
+    - Delete user
 
 

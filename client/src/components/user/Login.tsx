@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import Button from '../Button'
-import { Navigate, redirect } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import UserService from '../../services/UserService';
 import Modal from '../dialogs/Modal';
 import EventService from '../../services/EventService';
 
 export default function Login() {
-    const [isRegister, setIsRegister] = useState(false),
-        [isLoggedIn, setIsLoggedIn] = useState(false),
-        [errorMessage, setErrorMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState(''),
+        navigate = useNavigate()
 
     function registerButtonClickHandler() {
         console.log("debug me");
-        setIsRegister(true)
+        navigate('/register')
     }
 
     async function loginFormSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -23,7 +22,7 @@ export default function Login() {
         try {
             const user = await UserService.login({ email: data.email, password: data.password });
             EventService.publish('login', user)
-            setIsLoggedIn(true)
+            navigate('/');
         } catch (err) {
             setErrorMessage("Invalid email or password")
             console.log(err);
@@ -32,8 +31,6 @@ export default function Login() {
 
     return (
         <>
-            {isLoggedIn && <Navigate to={'/'} />}
-            {isRegister && <Navigate to={'/register'} />}
             {
                 errorMessage &&
                 <Modal title='Error' dismissModal={() => setErrorMessage('')}>

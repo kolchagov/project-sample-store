@@ -1,4 +1,4 @@
 .modal .modal-content>section {
-    max-height: 85vh;
+    max-height: 80vh;
     overflow: auto;
 }
