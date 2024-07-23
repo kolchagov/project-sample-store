@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
-export function useForm(initialValues: any, submitCallback: (values: any) => void) {
-    const [values, setValues] = useState(initialValues);
+export function useForm<T>(initialValues: T, submitCallback: (values: T) => void, validateCallback?: (values: T) => string) {
+    const [values, setValues] = useState<T>(initialValues);
 
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValues(prevState => ({
@@ -13,12 +13,12 @@ export function useForm(initialValues: any, submitCallback: (values: any) => voi
 
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         submitCallback(values);
     };
 
     return {
         values,
+        setValues,
         changeHandler,
         submitHandler,
     };
