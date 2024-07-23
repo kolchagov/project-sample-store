@@ -1,57 +1,66 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "../../Button";
 import { SyntheticEvent } from "react";
 import './Navbar.css'
 import MenuItem from "../MenuItem";
 import { Link } from "react-router-dom";
+import UserContext from '../../../contexts/UserContext';
 import UserService from "../../../services/UserService";
 
+enum LinkVisibility {
+    All,
+    Private,
+    BeforeLogin,
+    AdminOnly
+}
 const navItems = [
     {
-        public: true,
+        visible: LinkVisibility.All,
         name: 'Home',
         link: '/'
     },
     {
-        public: false,
+        visible: LinkVisibility.AdminOnly,
         name: 'Add Product',
         link: '/addProduct'
     },
     {
-        public: false,
+        visible: LinkVisibility.AdminOnly,
         name: 'Add Category',
         link: '/addCategory'
     },
     {
-        public: false,
+        visible: LinkVisibility.AdminOnly,
         name: 'Edit Users',
         link: '/users'
     },
     {
-        public: true,
-        isInvisibleOnLogin: true,
+        visible: LinkVisibility.BeforeLogin,
         name: 'About',
         link: '/about'
     },
     {
-        public: true,
+        visible: LinkVisibility.All,
         name: 'Cart',
         link: '/cart'
     },
     {
-        public: true,
-        isInvisibleOnLogin: true,
+        visible: LinkVisibility.BeforeLogin,
         name: 'Login',
         link: '/login',
     },
     {
-        public: false,
+        visible: LinkVisibility.Private,
         name: 'Logout',
         link: '/logout'
     }
 ]
 
-export default function Navbar({ isLogged }) {
+export default function Navbar() {
+    const { user } = useContext(UserContext),
+        isLogged = UserService.isLogged(user),
+        isAdmin = UserService.isAdmin(user)
+
     const setHeight = (el: HTMLElement, height: string) => {
         setTimeout(() => {
             el.style.height = height
@@ -98,8 +107,11 @@ export default function Navbar({ isLogged }) {
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         {navItems.map((item, index) => {
-                            if ((isLogged && !item.isInvisibleOnLogin) ||
-                                (!isLogged && item.public)) {
+                            if ((isLogged && item.visible !== LinkVisibility.BeforeLogin) ||
+                                (isLogged && item.visible === LinkVisibility.Private) ||
+                                (!isLogged && item.visible === LinkVisibility.BeforeLogin) ||
+                                (item.visible === LinkVisibility.All) ||
+                                (isAdmin && item.visible === LinkVisibility.AdminOnly)) {
                                 return <MenuItem key={index} href={item.link}>{item.name}</MenuItem>
                             }
                         })}

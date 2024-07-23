@@ -4,7 +4,6 @@ import User from '../model/User';
 const BASE = "http://localhost:3030/users"
 
 class UserService {
-    static currentUser: User | null
 
     static async getUser(userId: string): Promise<User> {
         const user = await requester.get(`${BASE}/${userId}`)
@@ -13,13 +12,19 @@ class UserService {
 
     static async login({ email, password }): Promise<User> {
         const user = await requester.post(`${BASE}/login`, { email, password }) as User
-        UserService.currentUser = user
         return user
     }
 
     static async logout() {
         await requester.post(`${BASE}/logout`)
-        UserService.currentUser = null
+    }
+
+    static isAdmin(user: any) {
+        return user.email?.startsWith('admin@abv.bg')
+    }
+
+    static isLogged(user: any) {
+        return !!user.accessToken
     }
 }
 

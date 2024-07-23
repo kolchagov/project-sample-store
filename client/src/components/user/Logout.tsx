@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import UserService from '../../services/UserService'
 import EventService from '../../services/EventService'
 import { Link } from 'react-router-dom'
+import UserContext from '../../contexts/UserContext'
 
 export default function Logout() {
+    const { logout } = useContext(UserContext)
     const [isLoggedOut, setIsLoggedOut] = React.useState(false)
     useEffect(() => {
         (async () => {
-            await UserService.logout();
+            await logout()
             setIsLoggedOut(true)
-            EventService.publish('logout')
         })()
     }, [])
     return (

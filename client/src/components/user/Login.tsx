@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Button from '../Button'
 import { useNavigate } from 'react-router-dom'
 import UserService from '../../services/UserService';
 import Modal from '../dialogs/Modal';
 import EventService from '../../services/EventService';
+import UserContext from '../../contexts/UserContext';
 
 export default function Login() {
+    const { login } = useContext(UserContext)
     const [errorMessage, setErrorMessage] = useState(''),
         navigate = useNavigate()
 
@@ -19,8 +21,7 @@ export default function Login() {
         const data = Object.fromEntries(formData)
 
         try {
-            const user = await UserService.login({ email: data.email, password: data.password });
-            EventService.publish('login', user)
+            await login({ email: data.email as string, password: data.password as string });
             navigate('/');
         } catch (err) {
             setErrorMessage("Invalid email or password")
