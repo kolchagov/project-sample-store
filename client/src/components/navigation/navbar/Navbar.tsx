@@ -13,7 +13,7 @@ enum LinkVisibility {
     BeforeLogin,
     AdminOnly
 }
-const navItems = [
+const mainMenu = [
     {
         visible: LinkVisibility.All,
         name: 'Home',
@@ -31,7 +31,7 @@ const navItems = [
     },
     {
         visible: LinkVisibility.AdminOnly,
-        name: 'Edit Users',
+        name: 'Users',
         link: '/users'
     },
     {
@@ -70,6 +70,8 @@ export default function Navbar() {
 
     function toggleCollapse(e: SyntheticEvent<Element, Event>) {
         const targetId = (e.target as HTMLElement).dataset.bsTarget
+        console.log(targetId);
+
         if (targetId) {
             const target = document.querySelector(targetId) as HTMLElement
             if (target.classList.contains('collapse')) {
@@ -106,7 +108,7 @@ export default function Navbar() {
                 </div>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        {navItems.map((item, index) => {
+                        {mainMenu.map((item, index) => {
                             if ((isLogged && item.visible !== LinkVisibility.BeforeLogin) ||
                                 (isLogged && item.visible === LinkVisibility.Private) ||
                                 (!isLogged && item.visible === LinkVisibility.BeforeLogin) ||

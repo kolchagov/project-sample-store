@@ -9,7 +9,7 @@ export default function Categories() {
     return (
         <div className='sidenav'>
             <ul className='vertical-menu list-group'>
-                <li className="text-center bg-black"><strong>Categories</strong></li>
+                <li className="text-center bg-black"><strong>Categories:</strong></li>
                 {
                     categories.map((cat, index) => <li key={index}>{cat.name}</li>)
                 }
