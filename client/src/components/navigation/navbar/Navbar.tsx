@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import Button from "../../Button";
-import { SyntheticEvent } from "react";
-import './Navbar.css'
-import MenuItem from "../MenuItem";
-import { Link } from "react-router-dom";
+
 import UserContext from '../../../contexts/UserContext';
 import UserService from "../../../services/UserService";
+
+import './Navbar.css'
+
+import Button from "../../Button";
+import { SyntheticEvent } from "react";
+import MenuItem from "../MenuItem";
+import { Link } from "react-router-dom";
 
 enum LinkVisibility {
     All,
