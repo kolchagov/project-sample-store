@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
 
-export function useForm<T>(initialValues: T, submitCallback: (values: T) => void, validateCallback?: (values: T) => string) {
+export function useForm<T>(initialValues: T,
+    submitCallback: (values: T) => void,
+    validateHandler: (name: string, values: T) => string = () => '') {
     const [values, setValues] = useState<T>(initialValues);
 
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,5 +23,6 @@ export function useForm<T>(initialValues: T, submitCallback: (values: T) => void
         setValues,
         changeHandler,
         submitHandler,
+        validateHandler,
     };
 }

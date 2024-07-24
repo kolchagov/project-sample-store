@@ -19,11 +19,11 @@ type RegisterUserType = {
 }
 
 export default function RegisterUser() {
-    const [errors, setErrors] = useState(""),
+    const [errors, setErrors] = useState(Array<string>()),
         [userCreated, setUserCreated] = useState(false),
         navigate = useNavigate()
-    const { values, setValues, changeHandler, submitHandler } = useForm({
-        email: '',
+    const { values, setValues, changeHandler, submitHandler, validateHandler } = useForm({
+        email: '', //intial values
         username: '',
         password: '',
         address: '',
@@ -32,9 +32,10 @@ export default function RegisterUser() {
         zip: '',
         subscribed: false,
     } as RegisterUserType, async () => {
-        if (!errors) {
+        // validate all   
+        const errors = Object.keys(values).map(propName => validateHandler(propName, values)).filter(e => e)
+        if (!errors.length) { // submit handler
             try {
-                debugger
                 const user = await UserService.register(values)
                 setUserCreated(() => true)
             } catch (err) {
@@ -43,35 +44,12 @@ export default function RegisterUser() {
 
             }
         } else {
-            <Modal title='Error' dismissModal={() => { }} >
-                <p>Please fix all errors to create account</p>
-            </Modal>
+            setErrors(() => errors)
         }
-    })
-
-    function stateChangeHandler(e) {
-        if (!values.city || values.city == values.state) {
-            // if city is empty, set city equal to state
-            const newValues = {
-                ...values,
-                city: e.target.value,
-                state: e.target.value
-            }
-            setValues(() => newValues)
-        } else {
-            changeHandler(e)
-        }
-    }
-
-    function checkboxChangeHandler(e) {
-        values.subscribed = e.target.checked
-        changeHandler(e)
-        console.log("debug me", values.subscribed);
-    }
-
-    function validate(e) {
+    }, (propName, values) => {
+        // validate rules handler
         let errors = ''
-        switch (e.target.name) {
+        switch (propName) {
             case "email":
                 if (!/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(values.email)) {
                     errors += "Please enter valid email"
@@ -99,13 +77,37 @@ export default function RegisterUser() {
                 break;
             case "city":
             case "zip":
-                if (!values[e.target.name]) {
-                    errors += e.target.name + " is required"
+                if (!values[propName]) {
+                    errors += propName + " is required"
                 }
                 break;
         }
-        setErrors(() => errors)
-        return !errors
+        return errors
+    })
+
+    function stateChangeHandler(e) {
+        if (!values.city || values.city == values.state) {
+            // if city is empty, set city equal to state
+            const newValues = {
+                ...values,
+                city: e.target.value,
+                state: e.target.value
+            }
+            setValues(() => newValues)
+        } else {
+            changeHandler(e)
+        }
+    }
+
+    function checkboxChangeHandler(e) {
+        values.subscribed = e.target.checked
+        changeHandler(e)
+        console.log("debug me", values.subscribed);
+    }
+
+    function validate(e) {
+        const error = validateHandler(e.target.name, values)
+        setErrors(() => [error])
     }
 
     return (
@@ -251,7 +253,7 @@ export default function RegisterUser() {
                             </div>
                         </div>
                         {
-                            errors && <div className="alert alert-danger">{errors}</div>
+                            !!errors.length && <div className="alert alert-danger">{errors.map((e, i) => <p key={i}>{e}</p>)}</div>
                         }
                         {
                             !userCreated ?
@@ -259,13 +261,10 @@ export default function RegisterUser() {
                                     Sign up
                                 </Button> :
                                 <>
-                                    <div className="alert alert-success">User registered successfully</div>
-                                    <div className="row">
-                                        <div className="col">
-                                            <p>Proceed to login page to order</p>
-                                            <Button onClickHandler={() => navigate('/login')}>Login</Button>
-                                        </div>
-                                    </div>
+                                    <Modal title='Success' dismissModal={() => { navigate('/login') }} >
+                                        <h5>User registered successfully</h5>
+                                        <p>Please login to continue</p>
+                                    </Modal>
                                 </>
                         }
                     </div>
