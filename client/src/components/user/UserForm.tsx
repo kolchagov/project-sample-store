@@ -1,80 +1,115 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from '../../hooks/useForm';
 
 import Button from '../Button';
+import User from '../../model/User';
+import { useNavigate } from 'react-router-dom';
 
-type RegisterUserType = {
-    email: string,
-    username: string,
-    password: string,
-    address: string,
-    state: string,
-    city: string,
-    zip: string,
-    subscribed: boolean,
-}
+const initialValues = {
+    email: '',
+    username: '',
+    password: '',
+    rePassword: '',
+    address: '',
+    state: '',
+    city: '',
+    zip: '',
+    subscribed: false,
+} as User;
 
-export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
+const bulgariaStates = [
+    "Blagoevgrad", "Burgas", "Dobrich", "Gabrovo", "Haskovo", "Kardzhali",
+    "Kyustendil", "Lovech", "Montana", "Pazardzhik", "Pernik", "Pleven",
+    "Plovdiv", "Razgrad", "Ruse", "Shumen", "Silistra", "Sliven", "Smolyan",
+    "Sofia City", "Sofia Province", "Stara Zagora", "Targovishte", "Varna",
+    "Veliko Tarnovo", "Vidin", "Vratsa", "Yambol",
+]
+
+export default function UserForm({ isRegisterMode, user, submitCallback, submitBtnText = 'Save' }:
+    {
+        isRegisterMode: boolean,
+        user?:
+        User,
+        submitCallback:
+        (user: User) => void,
+        submitBtnText?: string
+    }) {
     const [errors, setErrors] = useState(Array<string>())
+    const navigate = useNavigate()
 
-    const { values, setValues, changeHandler, submitHandler, validateHandler } = useForm({
-        email: '', //intial values
-        username: '',
-        password: '',
-        address: '',
-        state: '',
-        city: '',
-        zip: '',
-        subscribed: false,
-    } as RegisterUserType, async () => {
-        // validate all   
-        const errors = Object.keys(values).map(propName => validateHandler(propName, values)).filter(e => e)
-        if (!errors.length) { // submit handler
-            submitCallback(values)
-        } else {
-            setErrors(() => errors)
-        }
-
-    }, (propName, values) => {
+    const validateHandler = (propName: string, values: User): string => {
         // validate rules handler
-        let errors = ''
+        let errors = '';
         switch (propName) {
             case "email":
                 if (!/[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(values.email)) {
-                    errors += "Please enter valid email"
+                    errors += "Please enter valid email";
                 }
                 break;
             case "username":
                 if (values.username.length < 3 || values.username.length > 15) {
-                    errors += "Username must be between 3 and 15 characters long"
+                    errors += "Username must be between 3 and 15 characters long";
                 }
                 break;
             case "password":
-                if (values.password.length < 5 || values.password.length > 15) {
-                    errors += "Password must be between 5 and 15 characters long"
+                if (values.password &&
+                    (values.password.length < 5 || values.password.length > 15)) {
+                    errors += "Password must be between 5 and 15 characters long";
+                } else if (!values.password && isRegisterMode) {
+                    errors += "Password is required"
+                }
+                break;
+            case "rePassword":
+                if (values.password != values.rePassword) {
+                    errors += "Retyped password is diffrent from password"
                 }
                 break;
             case "address":
-                if (values.address.length < 8) {
-                    errors += "Address must be at least 8 characters long"
+                if (values.address && values.address.length < 8) {
+                    errors += "Address must be at least 8 characters long";
                 }
                 break;
             case "state":
                 if (!values.state || values.state === '...') {
-                    errors += "State is required"
+                    errors += "State is required";
                 }
                 break;
             case "city":
             case "zip":
                 if (!values[propName]) {
-                    errors += propName + " is required"
+                    errors += propName + " is required";
                 }
                 break;
         }
-        return errors
-    })
+        return errors;
+    };
 
-    function stateChangeHandler(e) {
+    const finalValidationCallback = (values: User) => {
+        // validate all   
+        const errors = Object.keys(initialValues)
+            .map(propName => validateHandler(propName, values))
+            .filter(e => e);
+
+        if (!errors.length) {
+            submitCallback(values);
+        }
+        setErrors(() => errors);
+    };
+
+    const {
+        values,
+        setValues,
+        changeHandler,
+        submitHandler
+    } = useForm(initialValues, finalValidationCallback)
+
+    useEffect(() => {
+        if (user) {
+            setValues(() => user)
+        }
+    }, [user])
+
+    const stateSelectChangeHandler = (e) => {
         if (!values.city || values.city == values.state) {
             // if city is empty, set city equal to state
             const newValues = {
@@ -88,16 +123,25 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
         }
     }
 
-    function checkboxChangeHandler(e) {
+    const checkboxChangeHandler = (e) => {
         values.subscribed = e.target.checked
         changeHandler(e)
-        console.log("debug me", values.subscribed);
     }
 
-    function validate(e) {
-        const error = validateHandler(e.target.name, values)
-        setErrors(() => [error])
+    const validateOnBlurHandler = (e) => {
+        let error = validateHandler(e.target.name, values)
+        setTimeout(() => {
+            // we may have a race condition here with finalValidationCallback()
+            !!error ? setErrors(() => [error]) : setErrors((() => []))
+        }, 200)
     }
+
+    const emailinputChangeHandler = (e) => {
+        if (isRegisterMode) {
+            changeHandler(e)
+        }
+    }
+
     return (
         <>
             <form onSubmit={submitHandler}>
@@ -105,7 +149,9 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                     <div className="card p-3">
                         <div className="form-row row">
                             <div className="form-group col-12 col-md-6">
-                                <label htmlFor="inputEmail">Email</label>
+                                <label htmlFor="inputEmail">
+                                    Email {!isRegisterMode && <span>* cannot be changed</span>}
+                                </label>
                                 <input
                                     type="email"
                                     name="email"
@@ -113,25 +159,15 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                                     id="inputEmail"
                                     placeholder="Email"
                                     value={values.email}
-                                    onChange={changeHandler}
-                                    onBlur={validate}
-                                />
-                            </div>
-                            <div className="form-group col-12 col-md-6">
-                                <label htmlFor="inputPassword">Password</label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    className="form-control"
-                                    id="inputPassword"
-                                    placeholder="Password"
-                                    value={values.password}
-                                    onChange={changeHandler}
-                                    onBlur={validate}
+                                    onChange={emailinputChangeHandler}
+                                    onBlur={validateOnBlurHandler}
+                                    readOnly={!isRegisterMode}
                                 />
                             </div>
                             <div className="form col-12 col-md-6">
-                                <label htmlFor="inputUsername">Username</label>
+                                <label htmlFor="inputUsername">
+                                    Username {!isRegisterMode && <span>* cannot be changed</span>}
+                                </label>
                                 <input
                                     type="text"
                                     name="username"
@@ -140,10 +176,42 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                                     placeholder="Username"
                                     value={values.username}
                                     onChange={changeHandler}
-                                    onBlur={validate}
+                                    onBlur={validateOnBlurHandler}
+                                    readOnly={!isRegisterMode}
                                 />
                             </div>
-
+                            <div className="form-group col-12 col-md-6">
+                                <label htmlFor="inputPassword">
+                                    Password {!isRegisterMode && <span>* cannot be changed</span>}
+                                </label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    className="form-control"
+                                    id="inputPassword"
+                                    placeholder="Password"
+                                    value={values.password}
+                                    onChange={changeHandler}
+                                    onBlur={validateOnBlurHandler}
+                                    readOnly={!isRegisterMode}
+                                />
+                            </div>
+                            <div className="form-group col-12 col-md-6">
+                                <label htmlFor="inputPassword">
+                                    Retype password {!isRegisterMode && <span>* cannot be changed</span>}
+                                </label>
+                                <input
+                                    type="password"
+                                    name="rePassword"
+                                    className="form-control"
+                                    id="inputPassword"
+                                    placeholder="Password"
+                                    value={values.rePassword}
+                                    onChange={changeHandler}
+                                    onBlur={validateOnBlurHandler}
+                                    readOnly={!isRegisterMode}
+                                />
+                            </div>
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputAddress">Address</label>
@@ -155,7 +223,7 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                                 placeholder="1234 Main St"
                                 value={values.address}
                                 onChange={changeHandler}
-                                onBlur={validate}
+                                onBlur={validateOnBlurHandler}
                             />
                         </div>
                         <div className="form-row row">
@@ -165,41 +233,15 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                                     className="form-control"
                                     name='state'
                                     value={values.state}
-                                    onChange={stateChangeHandler}
-                                    onBlur={validate}
+                                    onChange={stateSelectChangeHandler}
+                                    onBlur={validateOnBlurHandler}
                                 >
                                     <option>...</option>
-                                    <option value="Blagoevgrad">Blagoevgrad</option>
-                                    <option value="Burgas">Burgas</option>
-                                    <option value="Dobrich">Dobrich</option>
-                                    <option value="Gabrovo">Gabrovo</option>
-                                    <option value="Haskovo">Haskovo</option>
-                                    <option value="Kardzhali">Kardzhali</option>
-                                    <option value="Kyustendil">Kyustendil</option>
-                                    <option value="Lovech">Lovech</option>
-                                    <option value="Montana">Montana</option>
-                                    <option value="Pazardzhik">Pazardzhik</option>
-                                    <option value="Pernik">Pernik</option>
-                                    <option value="Pleven">Pleven</option>
-                                    <option value="Plovdiv">Plovdiv</option>
-                                    <option value="Razgrad">Razgrad</option>
-                                    <option value="Ruse">Ruse</option>
-                                    <option value="Shumen">Shumen</option>
-                                    <option value="Silistra">Silistra</option>
-                                    <option value="Sliven">Sliven</option>
-                                    <option value="Smolyan">Smolyan</option>
-                                    <option value="Sofia City">Sofia City</option>
-                                    <option value="Sofia Province">Sofia Province</option>
-                                    <option value="Stara Zagora">Stara Zagora</option>
-                                    <option value="Targovishte">Targovishte</option>
-                                    <option value="Varna">Varna</option>
-                                    <option value="Veliko Tarnovo">Veliko Tarnovo</option>
-                                    <option value="Vidin">Vidin</option>
-                                    <option value="Vratsa">Vratsa</option>
-                                    <option value="Yambol">Yambol</option>
-
+                                    {bulgariaStates.map(state =>
+                                        <option key={state} value={state}>{state}</option>)
+                                    }
                                 </select>
-                            </div>
+                            </div >
                             <div className="form-group col-md-6">
                                 <label htmlFor="inputCity">City</label>
                                 <input type="text"
@@ -208,7 +250,7 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                                     name="city"
                                     value={values.city}
                                     onChange={changeHandler}
-                                    onBlur={validate}
+                                    onBlur={validateOnBlurHandler}
                                 />
                             </div>
                             <div className="form-group col-md-2">
@@ -220,10 +262,10 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                                     name="zip"
                                     value={values.zip}
                                     onChange={changeHandler}
-                                    onBlur={validate}
+                                    onBlur={validateOnBlurHandler}
                                 />
                             </div>
-                        </div>
+                        </div >
                         <div className="form-group my-3">
                             <div className="form-check">
                                 <input
@@ -233,7 +275,7 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                                     name="subscribed"
                                     value=""
                                     onChange={checkboxChangeHandler}
-                                    onBlur={validate}
+                                    onBlur={validateOnBlurHandler}
                                 />
                                 <label className="form-check-label" htmlFor="gridCheck">
                                     Subscribe for our newsletter (optional)
@@ -243,12 +285,20 @@ export default function UserForm({ submitCallback, submitBtnText = 'Save' }) {
                         {
                             !!errors.length && <div className="alert alert-danger">{errors.map((e, i) => <p key={i}>{e}</p>)}</div>
                         }
-                        <Button color='prominent' type='submit'>
-                            {submitBtnText}
-                        </Button>
-                    </div>
+                        <div className="d-flex justify-content-end">
+                            <Button color='prominent' type='submit' className='mx-2'>
+                                {submitBtnText}
+                            </Button>
+                            {
+                                !isRegisterMode &&
+                                <Button color='default' onClickHandler={() => navigate('/users')}>
+                                    Back
+                                </Button>
+                            }
+                        </div>
+                    </div >
                 </div >
-            </form>
+            </form >
         </>
     )
 }

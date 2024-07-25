@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import UserService from '../../services/UserService';
-import UserForm from './UserForm';
-import Modal from '../dialogs/Modal';
+import UserService from '../../../services/UserService';
+import UserForm from '../UserForm';
+import Modal from '../../dialogs/Modal';
 
 export default function RegisterUser() {
     const [userCreated, setUserCreated] = useState(false),
+        [error, setError] = useState(""),
         navigate = useNavigate()
 
     async function registerUser(userData) {
-        await UserService.register(userData)
-        setUserCreated(() => true)
+        try {
+            await UserService.register(userData)
+            setUserCreated(() => true)
+        } catch (err) {
+            setError(() => err.message)
+        }
     }
 
     return (
         <>
-            <UserForm submitCallback={registerUser} submitBtnText='Sign up' />
+            <UserForm isRegisterMode={true} submitCallback={registerUser} submitBtnText='Sign up' />
             {
                 userCreated &&
                 <>
@@ -25,6 +30,12 @@ export default function RegisterUser() {
                         <p>Please login to continue</p>
                     </Modal>
                 </>
+            }
+            {
+                error &&
+                <Modal title='Error' dismissModal={() => setError('')}>
+                    {error}
+                </Modal>
             }
         </>
     )

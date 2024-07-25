@@ -1,36 +1,43 @@
 import './App.css'
 import React, { useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useState } from 'react'
 
+import UserService from './services/UserService';
 import CategoryService from './services/CategoryService';
+import User from './model/User';
+
+import UserContext from './contexts/UserContext';
+import CategoryContext from './contexts/CategoryContext';
 
 import Navbar from './components/navigation/navbar/Navbar'
 import Categories from './components/navigation/categories/Categories';
 import Home from './components/home/Home'
 import About from './components/about/About'
 import Login from './components/user/Login';
-import RegisterUser from './components/user/RegisterUser';
 import Logout from './components/user/Logout';
-import CategoryContext from './contexts/CategoryContext';
-import User from './model/User';
-import UserContext from './contexts/UserContext';
-import UserService from './services/UserService';
+import RegisterUser from './components/user/register-user/RegisterUser';
+import EditUser from './components/user/edit-user/EditUser';
+import UserTable from './components/user/user-table/UserTable';
+import CategoryTable from './components/navigation/categories/category-table/CategoryTable';
 
 function App() {
   const [user, setUser] = useState(new User());
   const [categoryMap, setCategoryMap] = useState({})
   const uuid = document.body.dataset.projectId as string
+  let myAccount = `/edit-user/${user._id}`
 
   useEffect(() => {
     CategoryService.getCategoryMap().then(categories => {
       setCategoryMap(() => categories)
-      console.log("debug me", categories);
-
+      // console.log("debug me", categories);
     })
     const userJson = localStorage.getItem(`${uuid}/user`)
     if (userJson) {
-      setUser(() => JSON.parse(userJson))
+      const loggedInUser = JSON.parse(userJson);
+      setUser(() => loggedInUser)
+      UserService.loggedinUser = loggedInUser
+      // console.log("debug me", loggedInUser);
     }
   }, [])
 
@@ -57,9 +64,13 @@ function App() {
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/about' element={<About />} />
-              <Route path='/register' element={<RegisterUser />} />
               <Route path='/login' element={<Login />} />
               <Route path='/logout' element={<Logout />} />
+              <Route path='/register-user' element={<RegisterUser />} />
+              <Route path='/edit-user/:userId' element={<EditUser />} />
+              <Route path='/account' element={<Navigate to={myAccount} />} />
+              <Route path='/users' element={<UserTable />} />
+              <Route path='/categories' element={<CategoryTable />} />
               {/* <Route path='/contact' element={<ContactForm />} /> */}
 
             </Routes>

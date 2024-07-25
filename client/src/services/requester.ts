@@ -25,7 +25,9 @@ class Requester {
                 return true
             }
         } else {
-            throw new Error(response.statusText)
+            const errResponse = await response.json()
+            console.error("debug me", errResponse);
+            throw new Error(errResponse.message)
         }
     }
 

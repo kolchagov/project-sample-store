@@ -1,7 +1,8 @@
 class User {
     public email: string;
-    public username?: string;
+    public username: string;
     public password?: string;
+    public rePassword?: string;
     public _id?: string;
     public accessToken?: string;
     public address?: string;

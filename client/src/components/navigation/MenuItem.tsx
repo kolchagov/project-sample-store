@@ -5,17 +5,27 @@ import { NavLink } from "react-router-dom";
 type MenuItemProps = {
     href: string,
     className?: string,
+    title?: string,
     children?: ReactNode
 }
 
-export default function MenuItem({ href, className, children, ...others }: MenuItemProps) {
+export default function MenuItem({ href, className, children, title, ...others }: MenuItemProps) {
     let classNames = "nav-link"
+    if (Array.isArray(children)) [
+        children = children.map((child, i) => {
+            const name = child as string
+            if (name.startsWith('icon:')) {
+                return <i key={i} className={name.substring(5) + ' mx-1'}></i>
+            }
+            return child;
+        })
+    ]
     if (className) {
         classNames += ` ${className}`
     }
     return (
         <li className="nav-item">
-            <NavLink className={classNames} to={href} {...others}>
+            <NavLink className={classNames} title={title} to={href} {...others}>
                 {children}
             </NavLink>
         </li>

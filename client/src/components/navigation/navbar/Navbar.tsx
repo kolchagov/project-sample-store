@@ -11,30 +11,35 @@ import MenuItem from "../MenuItem";
 import { Link } from "react-router-dom";
 
 enum LinkVisibility {
-    All,
+    Public,
     Private,
     BeforeLogin,
     AdminOnly
 }
 const mainMenu = [
     {
-        visible: LinkVisibility.All,
-        name: 'Home',
+        visible: LinkVisibility.Public,
+        name: ['icon:fas fa-home'],
         link: '/'
     },
     {
+        visible: LinkVisibility.Public,
+        name: ['icon:fas fa-shopping-cart', 'Cart'],
+        link: '/cart'
+    },
+    {
         visible: LinkVisibility.AdminOnly,
-        name: 'Add Product',
+        name: ['icon:fa-solid fa-icons', 'Products'],
         link: '/addProduct'
     },
     {
         visible: LinkVisibility.AdminOnly,
-        name: 'Add Category',
+        name: ['icon:fa-solid fa-list', 'Categories'],
         link: '/addCategory'
     },
     {
         visible: LinkVisibility.AdminOnly,
-        name: 'Users',
+        name: ['icon:fas fa-user', 'Users'],
         link: '/users'
     },
     {
@@ -43,19 +48,20 @@ const mainMenu = [
         link: '/about'
     },
     {
-        visible: LinkVisibility.All,
-        name: 'Cart',
-        link: '/cart'
-    },
-    {
         visible: LinkVisibility.BeforeLogin,
-        name: 'Login',
+        name: ['icon:fa fa fa-right-to-bracket ', 'Login'],
         link: '/login',
     },
     {
         visible: LinkVisibility.Private,
-        name: 'Logout',
-        link: '/logout'
+        name: ['icon:fa-regular fa-user', 'Account'],
+        link: '/account'
+    },
+    {
+        visible: LinkVisibility.Private,
+        name: ['icon:fa fa-right-from-bracket'],
+        link: '/logout',
+        title: 'Logout'
     }
 ]
 
@@ -112,12 +118,11 @@ export default function Navbar() {
                 <div className="collapse navbar-collapse" id="navbarResponsive">
                     <ul className="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         {mainMenu.map((item, index) => {
-                            if ((isLogged && item.visible !== LinkVisibility.BeforeLogin) ||
-                                (isLogged && item.visible === LinkVisibility.Private) ||
+                            if ((isLogged && item.visible === LinkVisibility.Private) ||
                                 (!isLogged && item.visible === LinkVisibility.BeforeLogin) ||
-                                (item.visible === LinkVisibility.All) ||
+                                (item.visible === LinkVisibility.Public) ||
                                 (isAdmin && item.visible === LinkVisibility.AdminOnly)) {
-                                return <MenuItem key={index} href={item.link}>{item.name}</MenuItem>
+                                return <MenuItem key={index} href={item.link} title={item.title}>{item.name}</MenuItem>
                             }
                         })}
                     </ul>

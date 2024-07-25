@@ -21,15 +21,17 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Setup react-router-dom
 - Add routes in App.jsx
 - Add links in the navigation
+    - Add personalized navigation
 ## 3. Page implementations
 - Home page with products
 - Login page with login form
-- Register page with register form
 - Logout page
+- Add Register page with User form
+- Add Edit page with User form
+- Add Users table page with edit/delete actions
 
 ## 4. Service implementations
 - User service implementation: user login
-    - Add personalized navigation
     - Register new user
     - Edit user
     - Delete user

@@ -12,7 +12,7 @@ export default function Login() {
         navigate = useNavigate()
 
     function registerButtonClickHandler() {
-        navigate('/register')
+        navigate('/register-user')
     }
 
     async function loginFormSubmitHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -24,7 +24,7 @@ export default function Login() {
             await login({ email: data.email as string, password: data.password as string });
             navigate('/');
         } catch (err) {
-            setErrorMessage("Invalid email or password")
+            setErrorMessage(err.message)
             console.log(err);
         }
     }
@@ -71,8 +71,12 @@ export default function Login() {
                         </div>
                         <div className="row">
                             <div className="col d-flex justify-content-end">
-                                <Button type='submit' className='mx-2'>Login</Button>
-                                <Button type='button' color='default' onClickHandler={registerButtonClickHandler}>Register</Button>
+                                <Button type='submit' className='mx-2'>
+                                    <i className="fa fa-right-to-bracket mx-1"></i> Login
+                                </Button>
+                                <Button type='button' color='default' onClickHandler={registerButtonClickHandler}>
+                                    <i className="fa-regular fa-user mx-1"></i> Register
+                                </Button>
                             </div>
                         </div>
                     </div>
