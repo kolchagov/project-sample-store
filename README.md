@@ -29,7 +29,8 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Add Register page with User form
 - Add Edit page with User form
 - Add Users table page with edit/delete actions
-
+- Add Category table with add/edit/delete category actions
+    - Add category form with validation
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user

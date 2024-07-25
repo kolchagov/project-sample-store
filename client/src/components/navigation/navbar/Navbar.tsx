@@ -35,7 +35,7 @@ const mainMenu = [
     {
         visible: LinkVisibility.AdminOnly,
         name: ['icon:fa-solid fa-list', 'Categories'],
-        link: '/addCategory'
+        link: '/categories'
     },
     {
         visible: LinkVisibility.AdminOnly,

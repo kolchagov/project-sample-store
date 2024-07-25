@@ -19,7 +19,9 @@ import Logout from './components/user/Logout';
 import RegisterUser from './components/user/register-user/RegisterUser';
 import EditUser from './components/user/edit-user/EditUser';
 import UserTable from './components/user/user-table/UserTable';
-import CategoryTable from './components/navigation/categories/category-table/CategoryTable';
+import CategoryTable from './components/categories/category-table/CategoryTable';
+import EditCategory from './components/categories/edit-category/EditCategory';
+import CreateCategory from './components/categories/create-category/CreateCategory';
 
 function App() {
   const [user, setUser] = useState(new User());
@@ -71,8 +73,8 @@ function App() {
               <Route path='/account' element={<Navigate to={myAccount} />} />
               <Route path='/users' element={<UserTable />} />
               <Route path='/categories' element={<CategoryTable />} />
-              {/* <Route path='/contact' element={<ContactForm />} /> */}
-
+              <Route path='/edit-category/:categoryId' element={<EditCategory />} />
+              <Route path='/add-category' element={<CreateCategory />} />
             </Routes>
           </div>
         </CategoryContext.Provider>
