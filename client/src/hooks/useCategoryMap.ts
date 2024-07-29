@@ -15,11 +15,21 @@ export default function useCategoryMap() {
         }
     }
 
+    const deleteCategory = (category: Category) => {
+        if (category._id) {
+            const newCategoryMap = {
+                ...categoryMap
+            }
+            delete newCategoryMap[category._id]
+            setCategoryMap(() => newCategoryMap)
+        }
+    }
+
     useEffect(() => {
         CategoryService.getCategoryMap().then(categories => {
             setCategoryMap(() => categories)
         })
     }, [])
 
-    return { categoryMap, updateCategoryMap }
+    return { categoryMap, updateCategoryMap, deleteCategory }
 }

@@ -41,5 +41,6 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Add category context
     - Migrate categories from jsonstore to collections
 - Add create category
+- Add delete category
 ## 6. Product service implementation:
 - Added read products 

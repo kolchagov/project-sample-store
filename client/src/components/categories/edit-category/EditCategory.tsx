@@ -9,12 +9,17 @@ import useCategoryMap from '../../../hooks/useCategoryMap'
 
 export default function EditCategory() {
     const { categoryId } = useParams(),
-        { updateCategoryMap } = useCategoryMap(),
+        { categoryMap, updateCategoryMap } = useCategoryMap(),
         navigate = useNavigate()
 
     const persistHandler = (category: Category) => {
-        // TODO: implement
+        CategoryService.editCategory(category).then(persistedCat => {
+            updateCategoryMap(persistedCat)
+            navigate('/categories')
+        })
     }
+
+    const category = categoryMap[categoryId || "default"];
 
     return (
         <>
@@ -22,7 +27,7 @@ export default function EditCategory() {
                 <div className="row">
                     <div className="col-sm-6">
                         <h3>Edit category</h3>
-                        <CategoryForm categoryId={categoryId} persistHandler={persistHandler} />
+                        <CategoryForm category={category} persistHandler={persistHandler} />
                     </div>
                 </div>
             </div>

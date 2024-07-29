@@ -6,6 +6,10 @@ export function useForm<T>(initialValues: T,
     const [values, setValues] = useState<T>(initialValues);
 
     const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.name) {
+            console.error("Missing name attribute: ", e.target);
+        }
+
         setValues(prevState => ({
             ...prevState,
             [e.target.name]: e.target.value,

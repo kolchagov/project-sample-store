@@ -27,6 +27,16 @@ class CategoryService {
         const newCategory = await Requester.post(`${BASE_URL}/categories`, category);
         return newCategory;
     }
+
+    static async editCategory(category: Category) {
+        const editedCategory = await Requester.put(`${BASE_URL}/categories/${category._id}`, category);
+        return editedCategory;
+    }
+
+    static async deleteCategory(categroyId: string) {
+        // TODO: move all products with this id in default category
+        await Requester.del(`${BASE_URL}/categories/${categroyId}`);
+    }
 }
 
 

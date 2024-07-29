@@ -2,53 +2,45 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Category from '../../../model/Category'
-import UserContext from '../../../contexts/UserContext'
 import UserService from '../../../services/UserService'
+import CategoryService from '../../../services/CategoryService'
+import useCategoryMap from '../../../hooks/useCategoryMap'
 
 import ConfirmModal from '../../dialogs/ConfirmModal'
 import Button from '../../Button'
-import CategoryService from '../../../services/CategoryService'
 
 export default function CategoryTable() {
-    const { user } = useContext(UserContext)
-    const userIdRef = useRef<null | string>(null)
+    const { categoryMap, deleteCategory } = useCategoryMap()
+    const categoryIdRef = useRef<null | string>(null)
     const navigate = useNavigate()
     const [categories, setCategories] = useState<Category[]>([])
     const [prompt, setPrompt] = useState('')
 
-
     useEffect(() => {
-        if (!UserService.isAdmin(user)) {
-            navigate('/')
-        }
-        CategoryService.getCategoryMap().then(categoryMap => {
-            const values = Object.values(categoryMap)
-            setCategories(values)
-        })
-    }, [])
+        setCategories(() => Object.values(categoryMap))
+    }, [categoryMap])
 
-    const deleteBtnClickHandler = (userId: string, username: string) => {
-        userIdRef.current = userId
-        setPrompt(() => `Are you sure you want to remove user "${username}"?`)
+    const deleteBtnClickHandler = (categoryId: string, name: string) => {
+        categoryIdRef.current = categoryId
+        setPrompt(() => `Are you sure you want to remove user "${name}"?`)
     }
 
-    const deleteUser = async () => {
-        if (userIdRef.current) {
+    const deleteCategoryHandler = async () => {
+        if (categoryIdRef.current) {
             try {
-                await UserService.deleteUser(userIdRef.current)
-                console.log('debug me: USER DELETETED');
-                setCategories(categories.filter(user => user._id !== userIdRef.current))
+                await CategoryService.deleteCategory(categoryIdRef.current)
+                deleteCategory(categoryMap[categoryIdRef.current])
             } catch (err) {
                 console.log(err);
             }
         }
         setPrompt(() => '')
-        userIdRef.current = null
+        categoryIdRef.current = null
     }
 
     const cancelDeleteUser = async () => {
         setPrompt(() => '')
-        userIdRef.current = null
+        categoryIdRef.current = null
     }
 
     return (
@@ -56,7 +48,7 @@ export default function CategoryTable() {
             {prompt &&
                 <ConfirmModal
                     title='Confirmation required'
-                    confirmCallback={() => deleteUser()}
+                    confirmCallback={() => deleteCategoryHandler()}
                     cancelCallback={cancelDeleteUser}
                 >
                     {prompt}

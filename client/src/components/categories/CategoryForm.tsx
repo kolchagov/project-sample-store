@@ -1,18 +1,16 @@
-import React, { useContext, useState } from 'react'
-import { useForm } from '../../hooks/useForm'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { CategoryContext } from '../../contexts/CategoryContext'
+import { useForm } from '../../hooks/useForm'
 
 import Button from '../Button'
-import Category from '../../model/Category'
+import Category from '../../model/Category';
 
 const initialValues: Category = { name: '' }
 
-export default function CategoryForm({ categoryId, persistHandler }: { categoryId?: string, persistHandler: (category: Category) => void }) {
+export default function CategoryForm({ category, persistHandler }: { category?: Category, persistHandler: (category: Category) => void }) {
     const navigate = useNavigate()
-    const categoryMap = useContext(CategoryContext)
-
     const [errors, setErrors] = useState('')
+
     const categoryFormSubmitHandler = (values: any) => {
         const errors = validate()
         setErrors(() => errors)
@@ -23,14 +21,14 @@ export default function CategoryForm({ categoryId, persistHandler }: { categoryI
 
     const {
         values,
+        setValues,
         changeHandler,
         submitHandler
     } = useForm({ ...initialValues }, categoryFormSubmitHandler)
 
-    if (categoryId) {
-        const category = categoryMap[categoryId]
-        Object.assign(values, category)
-    }
+    useEffect(() => {
+        if (category) setValues(() => ({ ...category }))
+    }, [category])
 
     const validate = () => {
         let errors = ''
@@ -86,5 +84,4 @@ export default function CategoryForm({ categoryId, persistHandler }: { categoryI
             </form>
         </>
     )
-
 }
