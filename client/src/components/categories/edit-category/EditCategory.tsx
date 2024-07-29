@@ -1,9 +1,20 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
+import Category from '../../../model/Category'
+import CategoryService from '../../../services/CategoryService'
+
 import CategoryForm from '../CategoryForm'
-import { useParams } from 'react-router-dom'
+import useCategoryMap from '../../../hooks/useCategoryMap'
 
 export default function EditCategory() {
-    const { categoryId } = useParams()
+    const { categoryId } = useParams(),
+        { updateCategoryMap } = useCategoryMap(),
+        navigate = useNavigate()
+
+    const persistHandler = (category: Category) => {
+        // TODO: implement
+    }
 
     return (
         <>
@@ -11,7 +22,7 @@ export default function EditCategory() {
                 <div className="row">
                     <div className="col-sm-6">
                         <h3>Edit category</h3>
-                        <CategoryForm categoryId={categoryId} />
+                        <CategoryForm categoryId={categoryId} persistHandler={persistHandler} />
                     </div>
                 </div>
             </div>

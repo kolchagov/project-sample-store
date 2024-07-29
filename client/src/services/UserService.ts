@@ -5,13 +5,25 @@ const BASE = "http://localhost:3030/users",
     STORE_BASE = "http://localhost:3030/jsonstore"
 
 class UserService {
-    public static loggedinUser: User
+    private static authUser: User | null = null
+
+    static get currentUser(): User | null {
+        return this.authUser
+    }
+
+    public static setCurrentUser(user: User | null) {
+        this.authUser = user
+    }
 
     static async getUser(userId: string | undefined): Promise<User> {
-        if (this.loggedinUser?._id === userId) {
-            return this.loggedinUser
+        if (this.authUser && this.authUser._id === userId) {
+            return this.authUser
         }
         const user = await Requester.get(`${STORE_BASE}/users/${userId}`)
+        if (user === true) {
+            // special case: server returns 204: no content
+            return new User()
+        }
         return user
     }
 
@@ -38,12 +50,13 @@ class UserService {
 
     static async login({ email, password }): Promise<User> {
         const user = await Requester.post(`${BASE}/login`, { email, password }) as User
-        this.loggedinUser = user
+        this.authUser = user
         return user
     }
 
     static async logout() {
         await Requester.post(`${BASE}/logout`)
+        this.authUser = null
     }
 
     static isAdmin(user: any) {

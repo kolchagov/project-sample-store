@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import Product from '../../model/Product';
 import Modal from '../dialogs/Modal';
-import CategoryContext from '../../contexts/CategoryContext';
+import { CategoryContext } from '../../contexts/CategoryContext';
 /** global window.bootstrap */
 
 type PoductDetailsProps = {

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import './Categories.css'
-import CategoryContext from '../../../contexts/CategoryContext'
+import { CategoryContext } from '../../../contexts/CategoryContext'
 import Category from '../../../model/Category'
 
 export default function Categories() {

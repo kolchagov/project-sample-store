@@ -105,6 +105,13 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
 
     useEffect(() => {
         if (user) {
+            // populate missing props with initial values
+            // it's importna for React controlled form
+            Object.keys(initialValues).forEach(key => {
+                if (user[key] === undefined) {
+                    user[key] = initialValues[key]
+                }
+            })
             setValues(() => user)
         }
     }, [user])

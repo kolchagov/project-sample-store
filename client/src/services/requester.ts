@@ -1,8 +1,17 @@
+import UserService from "./UserService"
+
 class Requester {
+
     private static async doRequest(method: string, url: string, data?: object) {
         const headers = {
             'Content-Type': 'application/json',
         }
+
+        const currentUser = UserService.currentUser
+        if (currentUser && currentUser.accessToken) {
+            headers['X-Authorization'] = currentUser.accessToken
+        }
+
         const options = {
             method,
             headers,
