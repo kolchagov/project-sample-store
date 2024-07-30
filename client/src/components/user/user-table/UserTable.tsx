@@ -7,14 +7,15 @@ import { UserContext } from '../../../contexts/AuthContextProvider'
 import Button from '../../Button'
 import UserService from '../../../services/UserService'
 import ConfirmModal from '../../dialogs/ConfirmModal';
+import Modal from '../../dialogs/Modal'
 
 export default function UserTable() {
     const { user } = useContext(UserContext)
     const userIdRef = useRef<null | string>(null)
     const navigate = useNavigate()
     const [users, setUsers] = useState<User[]>([])
-    const [prompt, setPrompt] = useState('')
-
+    const [prompt, setPrompt] = useState(''),
+        [error, setError] = useState<null | string>(null)
 
     useEffect(() => {
         if (!UserService.isAdmin(user)) {
@@ -37,7 +38,7 @@ export default function UserTable() {
                 console.log('debug me: USER DELETETED');
                 setUsers(users.filter(user => user._id !== userIdRef.current))
             } catch (err) {
-                console.log(err);
+                setError(() => err.message)
             }
         }
         setPrompt(() => '')
@@ -51,6 +52,12 @@ export default function UserTable() {
 
     return (
         <>
+            {
+                error &&
+                <Modal title='Error' dismissModal={() => setError(null)}>
+                    {error}
+                </Modal>
+            }
             {prompt &&
                 <ConfirmModal
                     title='Confirmation required'

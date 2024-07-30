@@ -8,7 +8,7 @@ import User from '../../../model/User';
 
 export default function EditUser() {
     const { userId } = useParams(),
-        naigate = useNavigate(),
+        navigate = useNavigate(),
         [user, setUser] = useState({} as User)
     useEffect(() => {
         UserService.getUser(userId).then(currentUser => {
@@ -19,7 +19,8 @@ export default function EditUser() {
     const submitHandler = (values: User) => {
         UserService.updateUser(values).then(updatedUser => {
             setUser(() => updatedUser)
-            naigate('/')
+            UserService.isAdmin(updatedUser) ?
+                navigate('/users') : navigate('/')
         })
     }
 

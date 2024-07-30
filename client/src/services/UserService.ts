@@ -30,6 +30,9 @@ class UserService {
     }
 
     static async deleteUser(userId: string): Promise<User[]> {
+        if (userId === this.authUser?._id) {
+            throw new Error("Can't delete current user")
+        }
         const storeObject = await Requester.del(`${STORE_BASE}/users/${userId}`) as Object
         return Object.values(storeObject)
     }

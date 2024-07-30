@@ -31,6 +31,8 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Add Users table page with edit/delete actions
 - Add Category table with add/edit/delete category actions
     - Add category form with validation
+- Add error handling to users table page
+- Add error handling to category table page
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
@@ -38,6 +40,7 @@ As backend server the decision was made to use softuni-practice-server (non-pers
     - Delete user
 - Logout user
 - Hard-coded default users into server
+    - Migrated users from jsonstore to collections
 ## 5. Category service implementation:
 - Add read categories
 - Add category context
@@ -45,4 +48,4 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Add create category
 - Add delete category
 ## 6. Product service implementation:
-- Added read products 
+- Add read products 

@@ -1,20 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Category from '../../../model/Category'
-import UserService from '../../../services/UserService'
 import CategoryService from '../../../services/CategoryService'
 import useCategoryMap from '../../../hooks/useCategoryMap'
 
 import ConfirmModal from '../../dialogs/ConfirmModal'
 import Button from '../../Button'
+import Modal from '../../dialogs/Modal'
 
 export default function CategoryTable() {
     const { categoryMap, deleteCategory } = useCategoryMap()
     const categoryIdRef = useRef<null | string>(null)
     const navigate = useNavigate()
     const [categories, setCategories] = useState<Category[]>([])
-    const [prompt, setPrompt] = useState('')
+    const [prompt, setPrompt] = useState(''),
+        [error, setError] = useState<null | string>(null)
 
     useEffect(() => {
         setCategories(() => Object.values(categoryMap))
@@ -31,7 +32,7 @@ export default function CategoryTable() {
                 await CategoryService.deleteCategory(categoryIdRef.current)
                 deleteCategory(categoryMap[categoryIdRef.current])
             } catch (err) {
-                console.log(err);
+                setError(() => err.message)
             }
         }
         setPrompt(() => '')
@@ -45,7 +46,14 @@ export default function CategoryTable() {
 
     return (
         <>
-            {prompt &&
+            {
+                error &&
+                <Modal title='Error' dismissModal={() => setError(null)}>
+                    {error}
+                </Modal>
+            }
+            {
+                prompt &&
                 <ConfirmModal
                     title='Confirmation required'
                     confirmCallback={() => deleteCategoryHandler()}

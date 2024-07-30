@@ -6,6 +6,12 @@ import Category from "../model/Category"
 export default function useCategoryMap() {
     const [categoryMap, setCategoryMap] = useState({})
 
+    useEffect(() => {
+        CategoryService.getCategoryMap().then(categories => {
+            setCategoryMap(() => categories)
+        })
+    }, [])
+
     const updateCategoryMap = (category: Category) => {
         if (category._id) {
             const newCategoryMap = {
@@ -24,12 +30,6 @@ export default function useCategoryMap() {
             setCategoryMap(() => newCategoryMap)
         }
     }
-
-    useEffect(() => {
-        CategoryService.getCategoryMap().then(categories => {
-            setCategoryMap(() => categories)
-        })
-    }, [])
 
     return { categoryMap, updateCategoryMap, deleteCategory }
 }
