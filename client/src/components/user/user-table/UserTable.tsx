@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import User from '../../../model/User'
-import UserContext from '../../../contexts/UserContext'
+import { UserContext } from '../../../contexts/AuthContextProvider'
 
 import Button from '../../Button'
 import UserService from '../../../services/UserService'

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 
-import UserContext from '../../../contexts/UserContext';
+import { UserContext } from "../../../contexts/AuthContextProvider";
 import UserService from "../../../services/UserService";
 
 import './Navbar.css'

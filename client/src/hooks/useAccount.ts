@@ -4,17 +4,17 @@ import User from "../model/User";
 import UserService from "../services/UserService";
 
 export default function useAccount() {
-    const [user, setUser] = useState(() => {
+    const [user, setUser] = useState(new User());
+
+    // tried useState(()=> ...) here, but it didn't work on vite hmr update
+    useEffect(() => {
         const userJson = localStorage.getItem("user")
         if (userJson) {
             const loggedInUser = JSON.parse(userJson);
-            // console.log("debug me", loggedInUser);
             UserService.setCurrentUser(loggedInUser)
-            return loggedInUser
-        } else {
-            return new User()
+            setUser(() => loggedInUser)
         }
-    });
+    }, [])
 
     async function login(credentials: { email: string, password: string }) {
         const loggedUser = await UserService.login(credentials)
@@ -22,7 +22,7 @@ export default function useAccount() {
     }
 
     async function logout() {
-        await UserService.logout();
+        UserService.logout();
         switchAuth(new User())
     }
 
@@ -36,7 +36,8 @@ export default function useAccount() {
         } else {
             localStorage.setItem("user", JSON.stringify(newUser))
         }
-        setUser(() => user)
+        console.log("debug me", newUser);
+        setUser(() => newUser)
     }
     return { user, login, logout, switchAuth, isAuthenticated }
 

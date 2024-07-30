@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-import Button from '../Button'
 import { useNavigate } from 'react-router-dom'
-import UserService from '../../services/UserService';
+
+import { UserContext } from '../../contexts/AuthContextProvider';
+
+import Button from '../Button'
 import Modal from '../dialogs/Modal';
-import EventService from '../../services/EventService';
-import UserContext from '../../contexts/UserContext';
 
 export default function Login() {
     const { login } = useContext(UserContext)

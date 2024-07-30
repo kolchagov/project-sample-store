@@ -1,7 +1,7 @@
 import Category from '../model/Category';
 import Requester from './Requester';
 
-const BASE_URL = "http://localhost:3030/data/";
+const BASE_URL = "http://localhost:3030/data";
 
 type CategoryMapType = {
     [id: string]: Category
@@ -16,9 +16,7 @@ class CategoryService {
         }
         const categories = await Requester.get(`${BASE_URL}/categories`) as Category[]
         categories.forEach((category: Category) => {
-            if (category._id) categoryMap = {
-                ...categoryMap, [category._id]: category
-            }
+            if (category._id) categoryMap[category._id] = category
         })
         return categoryMap
     }

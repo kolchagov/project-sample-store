@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import UserService from '../../../services/UserService'
 
@@ -8,6 +8,7 @@ import User from '../../../model/User';
 
 export default function EditUser() {
     const { userId } = useParams(),
+        naigate = useNavigate(),
         [user, setUser] = useState({} as User)
     useEffect(() => {
         UserService.getUser(userId).then(currentUser => {
@@ -15,9 +16,13 @@ export default function EditUser() {
         })
     }, [])
 
-    function submitHandler(values: User) {
-        console.log(values);
+    const submitHandler = (values: User) => {
+        UserService.updateUser(values).then(updatedUser => {
+            setUser(() => updatedUser)
+            naigate('/')
+        })
     }
+
     return (
         <>
             <div className="row">

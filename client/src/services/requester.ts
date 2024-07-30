@@ -9,6 +9,10 @@ class Requester {
 
         const currentUser = UserService.currentUser
         if (currentUser && currentUser.accessToken) {
+            if (UserService.isAdmin(currentUser) && url.indexOf('/users') > -1) {
+                // special case: path /data/users is protected
+                headers['X-Admin'] = 'true'
+            }
             headers['X-Authorization'] = currentUser.accessToken
         }
 

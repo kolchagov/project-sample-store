@@ -2,10 +2,10 @@ import Requester from "./Requester";
 import User from '../model/User';
 
 const BASE = "http://localhost:3030/users",
-    STORE_BASE = "http://localhost:3030/jsonstore"
+    STORE_BASE = "http://localhost:3030/data"
 
 class UserService {
-    private static authUser: User | null = null
+    private static authUser: User | null
 
     static get currentUser(): User | null {
         return this.authUser
@@ -16,9 +16,6 @@ class UserService {
     }
 
     static async getUser(userId: string | undefined): Promise<User> {
-        if (this.authUser && this.authUser._id === userId) {
-            return this.authUser
-        }
         const user = await Requester.get(`${STORE_BASE}/users/${userId}`)
         if (user === true) {
             // special case: server returns 204: no content
@@ -35,6 +32,23 @@ class UserService {
     static async deleteUser(userId: string): Promise<User[]> {
         const storeObject = await Requester.del(`${STORE_BASE}/users/${userId}`) as Object
         return Object.values(storeObject)
+    }
+
+    static async updateUser({ _id, email, username, address, state, city, zip, subscribed }: User) {
+        if (!_id) {
+            throw new Error("User must have an id")
+        }
+        const persistedUser = await Requester.put(
+            `${STORE_BASE}/users/${_id}`,
+            { _id, email, username, address, state, city, zip, subscribed }
+        ) as User
+        if (_id === this.authUser?._id) {
+            this.authUser = {
+                ...this.authUser,
+                ...persistedUser
+            }
+        }
+        return persistedUser
     }
 
     static async register({ email, username, password, address, state, city, zip, subscribed }): Promise<User> {
@@ -55,8 +69,8 @@ class UserService {
     }
 
     static async logout() {
-        await Requester.post(`${BASE}/logout`)
         this.authUser = null
+        await Requester.post(`${BASE}/logout`)
     }
 
     static isAdmin(user: any) {

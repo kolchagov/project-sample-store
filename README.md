@@ -36,6 +36,8 @@ As backend server the decision was made to use softuni-practice-server (non-pers
     - Register new user
     - Edit user
     - Delete user
+- Logout user
+- Hard-coded default users into server
 ## 5. Category service implementation:
 - Add read categories
 - Add category context

@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import UserContext from '../../contexts/UserContext'
+import { UserContext } from '../../contexts/AuthContextProvider'
+
 import Button from '../Button'
 
 export default function Logout() {

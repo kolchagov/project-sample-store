@@ -1319,14 +1319,6 @@
 
     var identity = "email";
     var protectedData = {
-        categories: {
-            "44de527f-1b02-4a84-a6bc-e37a40ef3422": {
-                "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
-                "name": "Laptops",
-                "_createdOn": 1722270807333,
-                "_id": ""
-            }
-        },
         users: {
             "35c62d76-8152-4626-8712-eeb96381bea8": {
                 email: "peter@abv.bg",
@@ -1348,6 +1340,27 @@
         }
     };
     var seedData = {
+        categories: {
+            "44de527f-1b02-4a84-a6bc-e37a40ef3422": {
+                "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "name": "Laptops",
+                "_createdOn": 1722270807333,
+            }
+        },
+        users: {
+            "35c62d76-8152-4626-8712-eeb96381bea8": {
+                email: "peter@abv.bg",
+                username: "Peter",
+            },
+            "847ec027-f659-4086-8032-5173e2f9c93a": {
+                email: "george@abv.bg",
+                username: "George",
+            },
+            "60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
+                email: "admin@abv.bg",
+                username: "Admin",
+            }
+        },
         recipes: {
             "3987279d-0ad4-4afb-8ca9-5b256ae3b298": {
                 _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
