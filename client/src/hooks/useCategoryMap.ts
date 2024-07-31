@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 
 import CategoryService from "../services/CategoryService"
-import Category from "../model/Category"
+import Category, { CategoryMapType } from "../model/Category"
 
 export default function useCategoryMap() {
-    const [categoryMap, setCategoryMap] = useState({})
+    const [categoryMap, setCategoryMap] = useState({} as CategoryMapType)
 
     useEffect(() => {
         CategoryService.getCategoryMap().then(categories => {
@@ -21,15 +21,18 @@ export default function useCategoryMap() {
         }
     }
 
-    const deleteCategory = (category: Category) => {
-        if (category._id) {
-            const newCategoryMap = {
-                ...categoryMap
-            }
-            delete newCategoryMap[category._id]
-            setCategoryMap(() => newCategoryMap)
+    const deleteCategory = (categoryId: string) => {
+        const newCategoryMap = {
+            ...categoryMap
         }
+        delete newCategoryMap[categoryId]
+        setCategoryMap(() => newCategoryMap)
     }
 
-    return { categoryMap, updateCategoryMap, deleteCategory }
+    const getCategoryName = (categoryId: string = "default") => {
+        const category = categoryMap[categoryId] || categoryMap["default"]
+        return category?.name
+    }
+
+    return { categoryMap, getCategoryName, updateCategoryMap, deleteCategory }
 }

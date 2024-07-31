@@ -18,9 +18,10 @@ import UserTable from './components/user/user-table/UserTable';
 import CategoryTable from './components/categories/category-table/CategoryTable';
 import EditCategory from './components/categories/edit-category/EditCategory';
 import CreateCategory from './components/categories/create-category/CreateCategory';
+import ProductTable from './components/product-table/ProductTable';
 
 function App() {
-  const { user } = useAccount();
+  const { user } = useAccount()
 
   return (
     <>
@@ -41,6 +42,7 @@ function App() {
               <Route path='/categories' element={<CategoryTable />} />
               <Route path='/edit-category/:categoryId' element={<EditCategory />} />
               <Route path='/add-category' element={<CreateCategory />} />
+              <Route path='/catalog' element={<ProductTable />} />
             </Routes>
           </div>
         </CategoryConextProvider>

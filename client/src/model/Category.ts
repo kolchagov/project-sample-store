@@ -1,3 +1,7 @@
+export type CategoryMapType = {
+    [id: string]: Category
+}
+
 class Category {
     public _id?: string;
     public _ownerId?: string;

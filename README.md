@@ -48,4 +48,5 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Add create category
 - Add delete category
 ## 6. Product service implementation:
-- Add read products 
+- Add catalog and product table 
+    - Move hardcoded products to catalog collection

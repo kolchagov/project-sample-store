@@ -29,8 +29,8 @@ const mainMenu = [
     },
     {
         visible: LinkVisibility.AdminOnly,
-        name: ['icon:fa-solid fa-icons', 'Products'],
-        link: '/addProduct'
+        name: ['icon:fa-solid fa-icons', 'Catalog'],
+        link: '/catalog'
     },
     {
         visible: LinkVisibility.AdminOnly,

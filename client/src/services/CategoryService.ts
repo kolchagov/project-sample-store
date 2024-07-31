@@ -1,11 +1,7 @@
-import Category from '../model/Category';
+import Category, { CategoryMapType } from '../model/Category';
 import Requester from './Requester';
 
 const BASE_URL = "http://localhost:3030/data";
-
-type CategoryMapType = {
-    [id: string]: Category
-}
 
 class CategoryService {
     static async getCategoryMap() {

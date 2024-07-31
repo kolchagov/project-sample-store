@@ -13,13 +13,10 @@ export default function CategoryTable() {
     const { categoryMap, deleteCategory } = useCategoryMap()
     const categoryIdRef = useRef<null | string>(null)
     const navigate = useNavigate()
-    const [categories, setCategories] = useState<Category[]>([])
     const [prompt, setPrompt] = useState(''),
         [error, setError] = useState<null | string>(null)
 
-    useEffect(() => {
-        setCategories(() => Object.values(categoryMap))
-    }, [categoryMap])
+    const categories = Object.values(categoryMap) as Category[]
 
     const deleteBtnClickHandler = (categoryId: string, name: string) => {
         categoryIdRef.current = categoryId
@@ -30,7 +27,7 @@ export default function CategoryTable() {
         if (categoryIdRef.current) {
             try {
                 await CategoryService.deleteCategory(categoryIdRef.current)
-                deleteCategory(categoryMap[categoryIdRef.current])
+                deleteCategory(categoryIdRef.current)
             } catch (err) {
                 setError(() => err.message)
             }
