@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import Product from "../../model/Product";
-import "./ProductCard.css";
+
+import Product from "../../../model/Product";
 import ProductDetails from "../product-details/ProductDetails";
-import Button from "../Button";
+
+import Button from "../../Button";
+
+import "./ProductCard.css";
 
 type ProductCardProps = {
     product: Product

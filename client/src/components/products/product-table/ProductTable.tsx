@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Product from '../../model/Product'
-import Modal from '../dialogs/Modal'
-import ConfirmModal from '../dialogs/ConfirmModal'
-import Button from '../Button'
-import ProductService from '../../services/ProductService'
-import useCategoryMap from '../../hooks/useCategoryMap'
+import Product from '../../../model/Product'
+import Modal from '../../dialogs/Modal'
+import ConfirmModal from '../../dialogs/ConfirmModal'
+import Button from '../../Button'
+import ProductService from '../../../services/ProductService'
+import useCategoryMap from '../../../hooks/useCategoryMap'
 
 
 export default function ProductTable() {

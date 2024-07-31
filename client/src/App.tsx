@@ -18,7 +18,7 @@ import UserTable from './components/user/user-table/UserTable';
 import CategoryTable from './components/categories/category-table/CategoryTable';
 import EditCategory from './components/categories/edit-category/EditCategory';
 import CreateCategory from './components/categories/create-category/CreateCategory';
-import ProductTable from './components/product-table/ProductTable';
+import ProductTable from './components/products/product-table/ProductTable';
 
 function App() {
   const { user } = useAccount()

@@ -33,6 +33,7 @@ As backend server the decision was made to use softuni-practice-server (non-pers
     - Add category form with validation
 - Add error handling to users table page
 - Add error handling to category table page
+- Add catalog page for admin with product table
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
