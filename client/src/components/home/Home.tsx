@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import ProductCard from '../products/product-card/ProductCard';
+
 import ProductService from '../../services/ProductService';
+
+import ProductCard from '../products/product-card/ProductCard';
 import Product from '../../model/Product';
 
 export default function Home() {

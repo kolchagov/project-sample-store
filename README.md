@@ -34,6 +34,8 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Add error handling to users table page
 - Add error handling to category table page
 - Add catalog page for admin with product table
+    - Add product form
+    - Add edit product
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
@@ -51,3 +53,5 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 ## 6. Product service implementation:
 - Add catalog and product table 
     - Move hardcoded products to catalog collection
+- Add get product by id
+- Add update product

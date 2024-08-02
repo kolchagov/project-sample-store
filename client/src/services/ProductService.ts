@@ -15,8 +15,37 @@ class ProductService {
         return products
     }
 
+    static async getProduct(productId: string) {
+        const product = await Requester.get(`${BASE_URL}/catalog/${productId}`) as Product
+        return product
+    }
+
     static async addProduct(product: Product) {
         const persistedProduct = await Requester.post(`${BASE_URL}/catalog`, product);
+        return persistedProduct
+    }
+
+    static async updateProduct(productId: string,
+        {
+            img,
+            make,
+            model,
+            material,
+            year,
+            price,
+            description,
+            categoryId,
+        }: Product) {
+        const persistedProduct = await Requester.put(`${BASE_URL}/catalog/${productId}`, {
+            img,
+            make,
+            model,
+            material,
+            year,
+            price,
+            description,
+            categoryId,
+        });
         return persistedProduct
     }
 }
