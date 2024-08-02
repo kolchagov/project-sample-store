@@ -35,7 +35,6 @@ export default function UserTable() {
         if (userIdRef.current) {
             try {
                 await UserService.deleteUser(userIdRef.current)
-                console.log('debug me: USER DELETETED');
                 setUsers(users.filter(user => user._id !== userIdRef.current))
             } catch (err) {
                 setError(() => err.message)

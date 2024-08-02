@@ -39,6 +39,11 @@ export default function ProductTable() {
         productIdRef.current = null
     }
 
+    const getFormattedPrice = (product: Product) => {
+        const price = ProductService.getFormattedPrice(product)
+        return price.join(".")
+    }
+
     return (
         <>
             {
@@ -92,7 +97,7 @@ export default function ProductTable() {
                                             <td>{prod.make}</td>
                                             <td>{prod.year}</td>
                                             <td>{getCategoryName(prod.categoryId)}</td>
-                                            <td>{prod.price}</td>
+                                            <td className='text-end'>{getFormattedPrice(prod)}</td>
                                             <td className='d-flex flex-row justify-content-around'>
                                                 <Button color='prominent'
                                                     onClickHandler={() => navigate(`/edit-product/${prod._id}`)}

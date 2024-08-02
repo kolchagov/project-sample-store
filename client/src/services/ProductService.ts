@@ -5,6 +5,12 @@ const BASE_URL = "http://localhost:3030/data"
 
 class ProductService {
 
+    static getFormattedPrice(product: Product) {
+        const euros = Math.floor(product.price),
+            cents = ("00" + Math.round(product.price % 1 * 100)).slice(-2)
+        return [euros, cents]
+    }
+
     static async getProducts() {
         const relation = encodeURIComponent("category=categroyId:categories")
         const products = await Requester.get(`${BASE_URL}/catalog?load=${relation}`) as [Product]

@@ -6,14 +6,14 @@ import ProductDetails from "../product-details/ProductDetails";
 import Button from "../../Button";
 
 import "./ProductCard.css";
+import ProductService from '../../../services/ProductService';
 
 type ProductCardProps = {
     product: Product
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-    const euros = Math.floor(product.price),
-        cents = ("00" + Math.round(product.price % 1 * 100)).slice(-2),
+    const [euros, cents] = ProductService.getFormattedPrice(product),
         [isShowDetails, setIsShowDetails] = useState(false);
     let title = `${product.make} ${product.model}`
 

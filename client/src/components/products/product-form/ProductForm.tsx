@@ -5,6 +5,7 @@ import { useForm } from '../../../hooks/useForm';
 
 import Product from '../../../model/Product'
 import Button from '../../Button';
+import CategorySelector from '../../categories/category-selector/CategorySelector';
 
 const initialValues = {
     name: "",
@@ -113,15 +114,14 @@ export default function ProductForm({ product, submitCallback }:
                             <label htmlFor="category" className="form-label">
                                 Category
                             </label>
-                            <select
-                                name="category"
+                            <CategorySelector
                                 id="category"
                                 className="form-control"
                                 aria-label="Category"
-                            >
-                                <option value="No category">No category</option>
-                                <option value="Laptops">Laptops</option>
-                            </select>
+                                name='categoryId'
+                                value={values.categoryId}
+                                onChange={changeHandler}
+                            />
                         </div>
                         <div className="form-group col-md-2 mb-3">
                             <label htmlFor="priceInput" className="form-label">

@@ -37,6 +37,7 @@ As backend server the decision was made to use softuni-practice-server (non-pers
     - Add product form
     - Add edit product
     - Add create product
+        - Add category selector component
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
@@ -56,3 +57,5 @@ As backend server the decision was made to use softuni-practice-server (non-pers
     - Move hardcoded products to catalog collection
 - Add get product by id
 - Add update product
+- Moved price formatter into Product service
+

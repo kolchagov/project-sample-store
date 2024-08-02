@@ -30,8 +30,7 @@ export default function useCategoryMap() {
     }
 
     const getCategoryName = (categoryId: string = "default") => {
-        const category = categoryMap[categoryId] || categoryMap["default"]
-        return category?.name
+        return CategoryService.getCategoryName(categoryMap, categoryId)
     }
 
     return { categoryMap, getCategoryName, updateCategoryMap, deleteCategory }

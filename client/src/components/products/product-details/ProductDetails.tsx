@@ -4,6 +4,9 @@ import { CategoryContext } from '../../../contexts/CategoryContext';
 import Product from '../../../model/Product';
 
 import Modal from '../../dialogs/Modal';
+import useCategoryMap from '../../../hooks/useCategoryMap';
+import CategoryService from '../../../services/CategoryService';
+import { CategoryMapType } from '../../../model/Category';
 
 /** global window.bootstrap */
 
@@ -13,7 +16,11 @@ type PoductDetailsProps = {
 }
 
 export default function ProductDetails({ product, dismissModal }: PoductDetailsProps) {
-    const categories = useContext(CategoryContext)
+    const categoryMap = useContext(CategoryContext)
+
+    const getCategoryName = (categoryMap: CategoryMapType, product: Product) => {
+        return CategoryService.getCategoryName(categoryMap, product.categoryId);
+    }
 
     return (
         <>
@@ -31,7 +38,7 @@ export default function ProductDetails({ product, dismissModal }: PoductDetailsP
                     {
                         product.categoryId &&
                         <div className="flex-col">
-                            Category: <strong>{categories[product.categoryId].name}</strong>
+                            Category: <strong>{getCategoryName(categoryMap, product)}</strong>
                         </div>
                     }
                     {product.year && <div>Year: <strong>{product.year}</strong></div>}

@@ -6,9 +6,9 @@ const BASE_URL = "http://localhost:3030/data";
 class CategoryService {
     static async getCategoryMap() {
 
-        const defaultId = "default"
         let categoryMap: CategoryMapType = {
-            defaultId: new Category({ _id: defaultId, name: "No category" })
+            // hard-coded default category
+            default: new Category({ _id: "default", name: "No category" })
         }
         const categories = await Requester.get(`${BASE_URL}/categories`) as Category[]
         categories.forEach((category: Category) => {
@@ -30,6 +30,11 @@ class CategoryService {
     static async deleteCategory(categroyId: string) {
         // TODO: move all products with this id in default category
         await Requester.del(`${BASE_URL}/categories/${categroyId}`);
+    }
+
+    static getCategoryName(categoryMap: CategoryMapType, categoryId: string = "default") {
+        const category = categoryMap[categoryId] || categoryMap["default"]
+        return category?.name
     }
 }
 
