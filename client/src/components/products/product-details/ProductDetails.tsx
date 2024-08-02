@@ -14,7 +14,6 @@ type PoductDetailsProps = {
 
 export default function ProductDetails({ product, dismissModal }: PoductDetailsProps) {
     const categories = useContext(CategoryContext)
-    console.log("Debug me", product, categories);
 
     return (
         <>

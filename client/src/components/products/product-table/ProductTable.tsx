@@ -15,11 +15,13 @@ export default function ProductTable() {
     const [products, setProducts] = useState<Product[]>([])
     const productIdRef = useRef<null | string>(null)
     const [prompt, setPrompt] = useState(''),
-        [error, setError] = useState<null | string>(null)
+        [errorMessage, setErrorMessage] = useState<null | string>(null)
 
     useEffect(() => {
         ProductService.getProducts().then(dbProducts => {
             setProducts(dbProducts)
+        }).catch(error => {
+            setErrorMessage(error.message)
         })
     }, [])
 
@@ -40,9 +42,9 @@ export default function ProductTable() {
     return (
         <>
             {
-                error &&
-                <Modal title='Error' dismissModal={() => setError(null)}>
-                    {error}
+                errorMessage &&
+                <Modal title='Error' dismissModal={() => setErrorMessage(null)}>
+                    {errorMessage}
                 </Modal>
             }
             {prompt &&
@@ -60,7 +62,12 @@ export default function ProductTable() {
                             <h3>Catalog</h3>
                         </div>
                         <div className="col-auto text-right">
-                            <Button color='prominent'>Add product</Button>
+                            <Button
+                                color='prominent'
+                                onClickHandler={() => navigate("/create-product")}
+                            >
+                                Add product
+                            </Button>
                         </div>
                     </div>
                     {products.length === 0 ?

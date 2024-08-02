@@ -20,7 +20,7 @@ class ProductService {
         return product
     }
 
-    static async addProduct(product: Product) {
+    static async createProduct(product: Product) {
         const persistedProduct = await Requester.post(`${BASE_URL}/catalog`, product);
         return persistedProduct
     }

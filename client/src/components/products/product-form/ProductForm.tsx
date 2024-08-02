@@ -109,7 +109,7 @@ export default function ProductForm({ product, submitCallback }:
                                 onChange={changeHandler}
                             />
                         </div>
-                        <div className="form-group col-md-6 mb-3">
+                        <div className="form-group col-md-4 mb-3">
                             <label htmlFor="category" className="form-label">
                                 Category
                             </label>
@@ -122,6 +122,22 @@ export default function ProductForm({ product, submitCallback }:
                                 <option value="No category">No category</option>
                                 <option value="Laptops">Laptops</option>
                             </select>
+                        </div>
+                        <div className="form-group col-md-2 mb-3">
+                            <label htmlFor="priceInput" className="form-label">
+                                Price
+                            </label>
+                            <input
+                                type="number"
+                                id='priceInput'
+                                min={0}
+                                step={0.01}
+                                className="form-control"
+                                aria-label='Price'
+                                name='price'
+                                value={values.price}
+                                onChange={changeHandler}
+                            />
                         </div>
                     </div>
                     <div className="form-row row">
@@ -174,6 +190,7 @@ export default function ProductForm({ product, submitCallback }:
                                 className="form-control"
                                 id="inputDescription"
                                 rows={17}
+                                placeholder='Give a detailed description of the product'
                                 name="description"
                                 onChange={changeHandler}
                                 value={values.description}
