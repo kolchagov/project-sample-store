@@ -40,7 +40,7 @@ export default function ProductTable() {
     }
 
     const getFormattedPrice = (product: Product) => {
-        const price = ProductService.getFormattedPrice(product)
+        const price = ProductService.getFormattedPrice(product.price)
         return price.join(".")
     }
 

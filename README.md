@@ -10,6 +10,62 @@ The final code must adhere to project requirements and include both public and p
 
 As backend server the decision was made to use softuni-practice-server (non-persistent). If time allows, other cloud solutions can be used.
 
+## Project Structure
+The project is splitted into 2 parts: client and server. Each part has its own folder. Server has preseeded data to allow normal client operation
+
+## How to start the project
+### Client
+Change directory to client and install dependencies, then run it:
+```
+cd client
+npm install
+npm run dev
+```
+### Server
+Change directory to server, then run it with node.js:
+```
+cd server
+node server.js
+```
+
+## How to use MyMAG store:
+The store has public, private and admin parts. There are some predefined users:
+- admin: admin@abv.bg, password: admin
+- normal user: peter@abv.bg password: 123456
+- normal user: george@abv.bg password: 123456
+
+### Public part contains
+- Home page with products: you can browse the products, hover over them and see details. Clicking button Add to card adds the selected product to the cart
+- About page
+- Login page with login form 
+- Registration is publicly available via Login form's Register button
+- Registration form is controlled and has validation and rules checking: 
+    - username has length between 3 and 15 chars
+    - password has length between 5 and 15 chars
+    - address is required and has minimum length of 8 chars
+    - state is required and selectable from predefined list
+    - city and zip are required
+
+Failing to meet any of the above requirements will result in an error message with detailed description. Validation is performed on blur and on submit.
+    
+- Shopping cart page, which is visible by guest user, but requires login or registration to checkout
+
+### Private part additional functionality
+- User profile page, where you can see your profile details and edit them. There is some limitations from the practice server:
+> - users can't change their email or username
+> - users can't change their password
+- Logout page
+- Shopping cart page with checkout button
+
+### Admin part additional functionality
+- Users page with CRUD functionality
+- Categories page with CRUD functionality
+> 'No category' is fall-back category for all products. It's hard-coded and non-removable
+
+- Catalog page with CRUD functionality
+> Product form accepts image URLs from Internet
+    
+# Development stages
 ## 1. Initialize Project
 - Initialize git repo
 - Add base vite react project as client
@@ -24,6 +80,8 @@ As backend server the decision was made to use softuni-practice-server (non-pers
     - Add personalized navigation
 ## 3. Page implementations
 - Home page with products
+    - Add product card
+    - Add product details modal
 - Login page with login form
 - Logout page
 - Add Register page with User form
@@ -38,6 +96,8 @@ As backend server the decision was made to use softuni-practice-server (non-pers
     - Add edit product
     - Add create product
         - Add category selector component
+- Add shopping cart page
+    - Add shopping cart context and provider component
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
@@ -58,4 +118,10 @@ As backend server the decision was made to use softuni-practice-server (non-pers
 - Add get product by id
 - Add update product
 - Moved price formatter into Product service
-
+## 7. Add route guards
+- Add admin guard
+- Add private guard
+## 8. Implement shopping cart custom hook
+- Add item into cart
+- Calculate item amount
+- Calculate cart total price

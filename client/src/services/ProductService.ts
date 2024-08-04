@@ -5,9 +5,9 @@ const BASE_URL = "http://localhost:3030/data"
 
 class ProductService {
 
-    static getFormattedPrice(product: Product) {
-        const euros = Math.floor(product.price),
-            cents = ("00" + Math.round(product.price % 1 * 100)).slice(-2)
+    static getFormattedPrice(price: number) {
+        const euros = Math.floor(price),
+            cents = ("00" + Math.round(price % 1 * 100)).slice(-2)
         return [euros, cents]
     }
 

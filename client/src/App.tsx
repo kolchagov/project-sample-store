@@ -21,36 +21,47 @@ import CreateCategory from './components/categories/create-category/CreateCatego
 import ProductTable from './components/products/product-table/ProductTable';
 import EditProduct from './components/products/edit-product/EditProduct';
 import CreateProduct from './components/products/create-product/CreateProduct';
+import AdminGuard from './components/common/AdminGuard';
+import PrivateGuard from './components/common/PrivateGuard';
+import ShoppingCart from './components/shopping-cart/ShoppingCart';
+import { ShoppingCartContextProvider } from './contexts/ShoppingCartContext';
 
 function App() {
   const { user } = useAccount()
 
   return (
     <>
-      <AuthContextProvider>
-        <Navbar />
-        <CategoryConextProvider>
-          <Categories />
-          <div className='container'>
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='/about' element={<About />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/logout' element={<Logout />} />
-              <Route path='/register-user' element={<RegisterUser />} />
-              <Route path='/edit-user/:userId' element={<EditUser />} />
-              <Route path='/account' element={<Navigate to={`/edit-user/${user._id}`} />} />
-              <Route path='/users' element={<UserTable />} />
-              <Route path='/categories' element={<CategoryTable />} />
-              <Route path='/edit-category/:categoryId' element={<EditCategory />} />
-              <Route path='/add-category' element={<CreateCategory />} />
-              <Route path='/catalog' element={<ProductTable />} />
-              <Route path='/create-product' element={<CreateProduct />} />
-              <Route path='/edit-product/:productId' element={<EditProduct />} />
-            </Routes>
-          </div>
-        </CategoryConextProvider>
-      </AuthContextProvider>
+      <ShoppingCartContextProvider>
+        <AuthContextProvider>
+          <Navbar />
+          <CategoryConextProvider>
+            <Categories />
+            <div className='container'>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/about' element={<About />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/register-user' element={<RegisterUser />} />
+                <Route path='/catalog' element={<ProductTable />} />
+                <Route path='/cart' element={<ShoppingCart />} />
+                <Route element={<PrivateGuard />}>
+                  <Route path='/account' element={<Navigate to={`/edit-user/${user._id}`} />} />
+                  <Route path='/logout' element={<Logout />} />
+                </Route>
+                <Route path='/edit-user/:userId' element={<EditUser />} />
+                <Route element={<AdminGuard />}>
+                  <Route path='/users' element={<UserTable />} />
+                  <Route path='/categories' element={<CategoryTable />} />
+                  <Route path='/edit-category/:categoryId' element={<EditCategory />} />
+                  <Route path='/add-category' element={<CreateCategory />} />
+                  <Route path='/create-product' element={<CreateProduct />} />
+                  <Route path='/edit-product/:productId' element={<EditProduct />} />
+                </Route>
+              </Routes>
+            </div>
+          </CategoryConextProvider>
+        </AuthContextProvider>
+      </ShoppingCartContextProvider>
     </>
   )
 }

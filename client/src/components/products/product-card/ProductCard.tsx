@@ -1,28 +1,33 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { ShoppingCartContext } from "../../../contexts/ShoppingCartContext";
 
+import ProductService from '../../../services/ProductService';
 import Product from "../../../model/Product";
 import ProductDetails from "../product-details/ProductDetails";
 
 import Button from "../../Button";
+import ProductCountBadge from "./ProductCountBadge";
 
 import "./ProductCard.css";
-import ProductService from '../../../services/ProductService';
 
 type ProductCardProps = {
     product: Product
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-    const [euros, cents] = ProductService.getFormattedPrice(product),
+    const { addCartItem } = useContext(ShoppingCartContext)
+    const [euros, cents] = ProductService.getFormattedPrice(product.price),
         [isShowDetails, setIsShowDetails] = useState(false);
+
     let title = `${product.make} ${product.model}`
 
     if (title.length > 40) {
         title = title.substring(0, 40) + '...';
     }
 
-    function handleBuyNowEvent() {
-        console.log("debug me TODO implement buy");
+    function addToCartClickHandler() {
+        addCartItem(product, 1)
     }
     return (
         <>
@@ -33,11 +38,29 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <div className='contentBox'>
                     <h3 className="stroke">{title}</h3>
                     <h2 className='price'>{euros}.<small>{cents}</small> €</h2>
-                    <Button color='prominent' onClickHandler={handleBuyNowEvent}>Buy now</Button>
-                    <a href="#" className='button buy warning' onClick={() => setIsShowDetails(true)}>More info</a>
+                    <Button
+                        color='prominent'
+                        className="position-relative"
+                        onClickHandler={() => addToCartClickHandler()}
+                    >
+                        Add to cart <ProductCountBadge product={product} />
+                    </Button>
+                    <Link
+                        to="#"
+                        className='button buy warning'
+                        onClick={() => setIsShowDetails(true)}
+                    >
+                        More info
+                    </Link>
                 </div>
             </div >
-            {isShowDetails && <ProductDetails product={product} dismissModal={() => setIsShowDetails(false)} />}
+            {
+                isShowDetails &&
+                <ProductDetails
+                    product={product}
+                    dismissModal={() => setIsShowDetails(false)}
+                />
+            }
         </>
     )
 }

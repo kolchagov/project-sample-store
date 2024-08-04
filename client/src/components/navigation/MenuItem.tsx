@@ -13,9 +13,8 @@ export default function MenuItem({ href, className, children, title, ...others }
     let classNames = "nav-link"
     if (Array.isArray(children)) [
         children = children.map((child, i) => {
-            const name = child as string
-            if (name.startsWith('icon:')) {
-                return <i key={i} className={name.substring(5) + ' mx-1'}></i>
+            if (typeof child === 'string' && child.startsWith('icon:')) {
+                return <i key={i} className={child.substring(5) + ' mx-1'}></i>
             }
             return child;
         })

@@ -9,6 +9,8 @@ import Button from "../../Button";
 import { SyntheticEvent } from "react";
 import MenuItem from "../MenuItem";
 import { Link } from "react-router-dom";
+import { ShoppingCartContext } from "../../../contexts/ShoppingCartContext";
+import Badge from "../../common/Badge";
 
 enum LinkVisibility {
     Public,
@@ -21,11 +23,6 @@ const mainMenu = [
         visible: LinkVisibility.Public,
         name: ['icon:fas fa-home'],
         link: '/'
-    },
-    {
-        visible: LinkVisibility.Public,
-        name: ['icon:fas fa-shopping-cart', 'Cart'],
-        link: '/cart'
     },
     {
         visible: LinkVisibility.AdminOnly,
@@ -66,6 +63,7 @@ const mainMenu = [
 ]
 
 export default function Navbar() {
+    const { getAllItemsCount } = useContext(ShoppingCartContext)
     const { user } = useContext(UserContext),
         isLogged = UserService.isLogged(user),
         isAdmin = UserService.isAdmin(user)
@@ -116,7 +114,7 @@ export default function Navbar() {
                     </Button>
                 </div>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
-                    <ul className="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <ul className="navbar-nav text-uppercase ms-auto p-3">
                         {mainMenu.map((item, index) => {
                             if ((isLogged && item.visible === LinkVisibility.Private) ||
                                 (!isLogged && item.visible === LinkVisibility.BeforeLogin) ||
@@ -125,6 +123,9 @@ export default function Navbar() {
                                 return <MenuItem key={index} href={item.link} title={item.title}>{item.name}</MenuItem>
                             }
                         })}
+                        <MenuItem href="/cart" title="Cart" className="mx-md-2 position-relative">
+                            {['icon:fas fa-shopping-cart', <Badge key="productCard" count={getAllItemsCount()} />]}
+                        </MenuItem>
                     </ul>
                 </div>
             </div>

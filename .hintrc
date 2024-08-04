@@ -13,5 +13,15 @@
     "not ios_saf <= 17.4",
     "not and_chr <= 124",
     "not chrome <= 124"
-  ]
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "-webkit-overflow-scrolling"
+        ]
+      }
+    ]
+  }
 }

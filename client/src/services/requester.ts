@@ -12,6 +12,9 @@ class Requester {
             if (UserService.isAdmin(currentUser) && url.indexOf('/users') > -1) {
                 // special case: path /data/users is protected
                 headers['X-Admin'] = 'true'
+                // } else if (url.endsWith('/edit-user/' + UserService.currentUser?._id)) {
+                //     // special case: access own account
+                //     headers['X-Admin'] = 'true'
             }
             headers['X-Authorization'] = currentUser.accessToken
         }
