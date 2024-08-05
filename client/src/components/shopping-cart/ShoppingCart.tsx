@@ -7,9 +7,11 @@ import ProductService from '../../services/ProductService'
 import Button from '../Button'
 import { useNavigate } from 'react-router-dom'
 
+import './ShoppingCart.css'
+
 export default function ShoppingCart() {
   const { user } = useContext(UserContext)
-  const { items, totalPrice, itemAmount } = useContext(ShoppingCartContext)
+  const { items, totalPrice, itemAmount, setItems } = useContext(ShoppingCartContext)
   const navigate = useNavigate()
 
   const getFormattedPrice = (price: number) => {
@@ -23,6 +25,17 @@ export default function ShoppingCart() {
 
   const registerBtnHandler = () => {
     navigate('/register-user')
+  }
+
+  const changeQuantityHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name, id } = e.target
+    if (id) {
+      const item = items.find(item => item._id === id)
+      if (item) {
+        item.count = Number(value)
+      }
+      setItems([...items])
+    }
   }
 
   return (
@@ -42,7 +55,7 @@ export default function ShoppingCart() {
                     <tr>
                       <th>Product</th>
                       <th>Unit price</th>
-                      <th>Quantity</th>
+                      <th className='w-5em'>Quantity</th>
                       <th>Amount</th>
                     </tr>
                   </thead>
@@ -51,7 +64,18 @@ export default function ShoppingCart() {
                       <tr key={item._id}>
                         <td>{item.make} {item.model}</td>
                         <td>{getFormattedPrice(item.price)}</td>
-                        <td>{item.count}</td>
+                        <td className=''>
+                          <input
+                            type="number"
+                            className='form-control'
+                            min={0}
+                            name="count"
+                            id={item._id}
+                            defaultValue={item.count}
+                            onChange={changeQuantityHandler}
+                            aria-label='count'
+                          />
+                        </td>
                         <td className='text-end'>
                           {getFormattedPrice(itemAmount(item))}
                         </td>
