@@ -128,3 +128,7 @@ Failing to meet any of the above requirements will result in an error message wi
 - Calculate item amount
 - Calculate cart total price
 - Implement account state checking before checkout
+## 9. Implement category filter
+- Add custom hook for filtering products by category
+- Add route with parameters
+- Add handler for category change

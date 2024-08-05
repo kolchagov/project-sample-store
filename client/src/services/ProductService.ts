@@ -11,9 +11,15 @@ class ProductService {
         return [euros, cents]
     }
 
-    static async getProducts() {
-        const relation = encodeURIComponent("category=categroyId:categories")
-        const products = await Requester.get(`${BASE_URL}/catalog?load=${relation}`) as [Product]
+    static async getProducts(categoryId?: string) {
+        let params = ""
+        if (categoryId && categoryId !== "default") {
+            const search = new URLSearchParams({
+                where: `categoryId="${categoryId}"`
+            })
+            params = `?${search.toString()}`
+        }
+        const products = await Requester.get(`${BASE_URL}/catalog/${params}`) as [Product]
         // set default category 
         products.forEach(product => {
             product.categoryId = product.categoryId || "default"

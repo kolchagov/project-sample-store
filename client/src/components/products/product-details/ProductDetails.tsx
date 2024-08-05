@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 
 import { CategoryContext } from '../../../contexts/CategoryContext';
-import Product from '../../../model/Product';
-
-import Modal from '../../dialogs/Modal';
-import useCategoryMap from '../../../hooks/useCategoryMap';
 import CategoryService from '../../../services/CategoryService';
 import { CategoryMapType } from '../../../model/Category';
+
+import Product from '../../../model/Product';
+import Modal from '../../dialogs/Modal';
 
 /** global window.bootstrap */
 
@@ -16,7 +15,7 @@ type PoductDetailsProps = {
 }
 
 export default function ProductDetails({ product, dismissModal }: PoductDetailsProps) {
-    const categoryMap = useContext(CategoryContext)
+    const { categoryMap } = useContext(CategoryContext)
 
     const getCategoryName = (categoryMap: CategoryMapType, product: Product) => {
         return CategoryService.getCategoryName(categoryMap, product.categoryId);

@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from 'react'
-
-import ProductService from '../../services/ProductService';
+import React from 'react'
 
 import ProductCard from '../products/product-card/ProductCard';
-import Product from '../../model/Product';
+import useProducts from '../../hooks/useProducts';
+import { useParams } from 'react-router-dom';
 
 export default function Home() {
-    const [products, setProducts] = useState(Array<Product>())
-    useEffect(() => {
-        (async () => {
-            const catalog = await ProductService.getProducts();
-            setProducts(() => catalog)
-        })()
-    }, [])
+    const { categoryId } = useParams()
+    const { products, setCategoryId } = useProducts()
+
+    React.useEffect(() => {
+        setCategoryId(categoryId)
+    }, [categoryId])
 
     return (
         <div className='row'>
@@ -23,16 +21,6 @@ export default function Home() {
                     </div>
                 ))
             }
-            {/* <div className='col col-lg-3'>
-                <Button color='prominent'>Test </Button>
-                <Button color='warning'>Test </Button>
-            </div>
-            <div className='col col-lg-3'>
-                <Button color='prominent' outline='1'>Test outlined</Button>
-                <Button color='info' outline='1'>Test outlined</Button>
-                <Button color='danger' outline='1'>Test outlined</Button>
-                <Button color='success' outline='1'>Test outlined</Button>
-            </div> */}
         </div>
     )
 }
