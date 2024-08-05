@@ -6,7 +6,7 @@ import User from '../model/User'
 export const UserContext = React.createContext({
     user: {} as User,
     login: async (credentials: { email: string, password: string }) => { },
-    logout: async () => { }
+    logout: async () => { },
 })
 
 export default function AuthContextProvider({ children }: { children: React.ReactNode }) {

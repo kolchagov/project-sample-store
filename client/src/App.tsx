@@ -25,6 +25,7 @@ import AdminGuard from './components/common/AdminGuard';
 import PrivateGuard from './components/common/PrivateGuard';
 import ShoppingCart from './components/shopping-cart/ShoppingCart';
 import EditAccount from './components/user/edit-account/EditAccount';
+import Checkout from './components/checkout/Checkout';
 
 function App() {
   return (
@@ -42,10 +43,11 @@ function App() {
                 <Route path='/register-user' element={<RegisterUser />} />
                 <Route path='/catalog' element={<ProductTable />} />
                 <Route path='/cart' element={<ShoppingCart />} />
+                <Route path='/logout' element={<Logout />} />
                 <Route element={<PrivateGuard />}>
                   <Route path='/account' element={<EditAccount />} />
-                  <Route path='/logout' element={<Logout />} />
                   <Route path='/edit-user/:userId' element={<EditUser />} />
+                  <Route path='/checkout' element={<Checkout />} />
                 </Route>
                 <Route element={<AdminGuard />}>
                   <Route path='/users' element={<UserTable />} />

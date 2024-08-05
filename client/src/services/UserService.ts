@@ -80,6 +80,12 @@ class UserService {
     static async login({ email, password }): Promise<User> {
         const user = await Requester.post(`${BASE}/login`, { email, password }) as User
         this.authUser = user
+        try {
+            // get user details from users collection
+            const details = await UserService.getUser(user._id)
+            Object.assign(user, details)
+        } catch { }
+
         return user
     }
 

@@ -98,6 +98,7 @@ Failing to meet any of the above requirements will result in an error message wi
         - Add category selector component
 - Add shopping cart page
     - Add shopping cart context and provider component
+    - Add checkout page with order processing simulation
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
@@ -126,3 +127,4 @@ Failing to meet any of the above requirements will result in an error message wi
 - Add item into cart
 - Calculate item amount
 - Calculate cart total price
+- Implement account state checking before checkout

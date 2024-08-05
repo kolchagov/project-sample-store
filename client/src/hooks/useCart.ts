@@ -31,6 +31,7 @@ export default function useCart() {
 
     const itemAmount = (item: CartItem) => item.price * item.count
 
+    const clearItems = () => setItems([])
     return {
         items,
         addCartItem,
@@ -39,5 +40,6 @@ export default function useCart() {
         getAllItemsCount,
         totalPrice,
         itemAmount,
+        clearItems,
     }
 }

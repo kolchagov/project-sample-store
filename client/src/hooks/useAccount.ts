@@ -26,7 +26,7 @@ export default function useAccount() {
         UserService.logout();
     }
 
-    function isAuthenticated() {
+    function isAuthenticated(): boolean {
         return !!user.accessToken;
     }
 

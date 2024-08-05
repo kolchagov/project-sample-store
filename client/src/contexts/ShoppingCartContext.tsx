@@ -13,6 +13,7 @@ export const ShoppingCartContext = createContext({
     getAllItemsCount: () => 0 as number,
     totalPrice: 0 as number,
     itemAmount: (item: CartItem) => 0 as number,
+    clearItems: () => { },
 })
 
 export function ShoppingCartContextProvider({ children }: { children: React.ReactNode }) {
@@ -24,6 +25,7 @@ export function ShoppingCartContextProvider({ children }: { children: React.Reac
         getAllItemsCount,
         totalPrice,
         itemAmount,
+        clearItems,
     } = useCart()
     return (
         <ShoppingCartContext.Provider value={
@@ -34,7 +36,8 @@ export function ShoppingCartContextProvider({ children }: { children: React.Reac
                 getCartItemCount,
                 getAllItemsCount,
                 totalPrice,
-                itemAmount
+                itemAmount,
+                clearItems,
             }
         }>
             {children}
