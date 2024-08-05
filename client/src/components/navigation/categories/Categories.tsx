@@ -19,7 +19,10 @@ export default function Categories() {
                 </li>
                 {
                     categories.map((cat, index) =>
-                        <li key={index} onClick={() => { navigate(`/category/${cat._id}`) }}>
+                        <li key={index}
+                            onClick={() => {
+                                navigate(`/category/${cat._id}`)
+                            }}>
                             {cat.name}
                         </li>)
                 }

@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Category from '../../../model/Category'
 import CategoryService from '../../../services/CategoryService'
-import useCategoryMap from '../../../hooks/useCategoryMap'
+import { CategoryContext } from '../../../contexts/CategoryContext'
 
 import CategoryForm from '../CategoryForm'
 
 export default function CreateCategory() {
-    const { updateCategoryMap } = useCategoryMap(),
+    const { updateCategoryMap } = useContext(CategoryContext),
         navigate = useNavigate()
 
     const persistHandler = (category: Category) => {

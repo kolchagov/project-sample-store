@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import ProductService from '../../../services/ProductService'
-import useCategoryMap from '../../../hooks/useCategoryMap'
 
 import Product from '../../../model/Product'
 import Modal from '../../dialogs/Modal'
 import ConfirmModal from '../../dialogs/ConfirmModal'
 import Button from '../../Button'
+import { CategoryContext } from '../../../contexts/CategoryContext'
 
 export default function ProductTable() {
     const navigate = useNavigate()
-    const { getCategoryName } = useCategoryMap()
+    const { getCategoryName } = useContext(CategoryContext)
     const [products, setProducts] = useState<Product[]>([])
     const productIdRef = useRef<null | string>(null)
     const [prompt, setPrompt] = useState(''),

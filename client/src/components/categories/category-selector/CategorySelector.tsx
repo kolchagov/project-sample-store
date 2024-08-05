@@ -1,8 +1,8 @@
-import React from 'react'
-import useCategoryMap from '../../../hooks/useCategoryMap'
+import React, { useContext } from 'react'
+import { CategoryContext } from '../../../contexts/CategoryContext'
 
 export default function CategorySelector(props) {
-    const { categoryMap } = useCategoryMap(),
+    const { categoryMap } = useContext(CategoryContext),
         categories = Object.values(categoryMap)
 
     return (

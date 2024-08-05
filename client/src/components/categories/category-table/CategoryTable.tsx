@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Category from '../../../model/Category'
 import CategoryService from '../../../services/CategoryService'
-import useCategoryMap from '../../../hooks/useCategoryMap'
+import { CategoryContext } from '../../../contexts/CategoryContext'
 
 import ConfirmModal from '../../dialogs/ConfirmModal'
 import Button from '../../Button'
 import Modal from '../../dialogs/Modal'
 
 export default function CategoryTable() {
-    const { categoryMap, deleteCategory } = useCategoryMap()
+    const { categoryMap, deleteCategory } = useContext(CategoryContext)
     const categoryIdRef = useRef<null | string>(null)
     const navigate = useNavigate()
     const [prompt, setPrompt] = useState(''),
