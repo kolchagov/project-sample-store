@@ -22,8 +22,8 @@ export default function useAccount() {
     }
 
     async function logout() {
-        UserService.logout();
         switchAuth(new User())
+        UserService.logout();
     }
 
     function isAuthenticated() {

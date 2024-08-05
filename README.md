@@ -58,7 +58,7 @@ Failing to meet any of the above requirements will result in an error message wi
 - Shopping cart page with checkout button
 
 ### Admin part additional functionality
-- Users page with CRUD functionality
+- Users page with RUD functionality
 - Categories page with CRUD functionality
 > 'No category' is fall-back category for all products. It's hard-coded and non-removable
 
@@ -106,6 +106,7 @@ Failing to meet any of the above requirements will result in an error message wi
 - Logout user
 - Hard-coded default users into server
     - Migrated users from jsonstore to collections
+    - Fix account handling after migration
 ## 5. Category service implementation:
 - Add read categories
 - Add category context

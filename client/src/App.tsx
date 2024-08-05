@@ -1,10 +1,10 @@
 import './App.css'
 import React from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import AuthContextProvider from './contexts/AuthContextProvider';
 import { CategoryConextProvider } from './contexts/CategoryContext';
-import useAccount from './hooks/useAccount';
+import { ShoppingCartContextProvider } from './contexts/ShoppingCartContext';
 
 import Navbar from './components/navigation/navbar/Navbar'
 import Categories from './components/navigation/categories/Categories';
@@ -24,11 +24,9 @@ import CreateProduct from './components/products/create-product/CreateProduct';
 import AdminGuard from './components/common/AdminGuard';
 import PrivateGuard from './components/common/PrivateGuard';
 import ShoppingCart from './components/shopping-cart/ShoppingCart';
-import { ShoppingCartContextProvider } from './contexts/ShoppingCartContext';
+import EditAccount from './components/user/edit-account/EditAccount';
 
 function App() {
-  const { user } = useAccount()
-
   return (
     <>
       <ShoppingCartContextProvider>
@@ -45,10 +43,10 @@ function App() {
                 <Route path='/catalog' element={<ProductTable />} />
                 <Route path='/cart' element={<ShoppingCart />} />
                 <Route element={<PrivateGuard />}>
-                  <Route path='/account' element={<Navigate to={`/edit-user/${user._id}`} />} />
+                  <Route path='/account' element={<EditAccount />} />
                   <Route path='/logout' element={<Logout />} />
+                  <Route path='/edit-user/:userId' element={<EditUser />} />
                 </Route>
-                <Route path='/edit-user/:userId' element={<EditUser />} />
                 <Route element={<AdminGuard />}>
                   <Route path='/users' element={<UserTable />} />
                   <Route path='/categories' element={<CategoryTable />} />

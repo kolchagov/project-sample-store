@@ -2,7 +2,20 @@ import UserService from "./UserService"
 
 class Requester {
 
-    private static async doRequest(method: string, url: string, data?: object) {
+    private static doRequest(method: string, url: string, data?: object) {
+        return this.doRequestWithOptions(method, {}, url, data)
+    }
+
+    static doPowerRequest(method: string, options: {}, url: string, data?: object) {
+        return this.doRequestWithOptions(method, options, url, data)
+    }
+
+    private static async doRequestWithOptions(
+        method: string,
+        options: object,
+        url: string,
+        data?: object
+    ) {
         const headers = {
             'Content-Type': 'application/json',
         }
@@ -19,17 +32,14 @@ class Requester {
             headers['X-Authorization'] = currentUser.accessToken
         }
 
-        const options = {
-            method,
-            headers,
-        }
+
         let body: string | undefined
         if (data) {
             body = JSON.stringify(data)
         }
         let response;
         try {
-            response = await fetch(url, { ...options, body })
+            response = await fetch(url, { method, headers: { ...headers, ...options }, body })
         } catch (err) {
             console.error(`Request failed: ${method}:${url} ${JSON.stringify(data)}`);
             throw err;
@@ -42,7 +52,7 @@ class Requester {
             }
         } else {
             const errResponse = await response.json()
-            console.error("debug me", errResponse);
+            console.error("debug me", { ...headers, ...options, body }, errResponse);
             throw new Error(errResponse.message)
         }
     }

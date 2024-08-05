@@ -17,7 +17,7 @@ export default function Logout() {
         <>
             <div className="row my-2 d-flex justify-content-center">
                 <div className="col-12 col-md-6">
-                    <section className='alert alert-success' role='alert'>
+                    <section className='alert alert-warning border-3' role='alert'>
                         {
                             !isLoggedOut ?
                                 <>

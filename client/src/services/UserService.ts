@@ -16,7 +16,11 @@ class UserService {
     }
 
     static async getUser(userId: string | undefined): Promise<User> {
-        const user = await Requester.get(`${STORE_BASE}/users/${userId}`)
+        const user = await Requester.doPowerRequest(
+            "GET",
+            { "X-Admin": "true" },
+            `${STORE_BASE}/users/${userId}`
+        )
         if (user === true) {
             // special case: server returns 204: no content
             return new User()
@@ -25,7 +29,7 @@ class UserService {
     }
 
     static async getUsers(): Promise<User[]> {
-        const storeObject = await Requester.get(`${STORE_BASE}/users/`) as Object
+        const storeObject = await Requester.get(`${STORE_BASE}/users`) as Object
         return Object.values(storeObject)
     }
 
@@ -41,7 +45,10 @@ class UserService {
         if (!_id) {
             throw new Error("User must have an id")
         }
-        const persistedUser = await Requester.put(
+        const adminOptions = _id === this.authUser?._id ? { "X-Admin": "true" } : {}
+        const persistedUser = await Requester.doPowerRequest(
+            "PUT",
+            adminOptions,
             `${STORE_BASE}/users/${_id}`,
             { _id, email, username, address, state, city, zip, subscribed }
         ) as User
@@ -55,13 +62,18 @@ class UserService {
     }
 
     static async register({ email, username, password, address, state, city, zip, subscribed }): Promise<User> {
+        // server-specific user registration
         const user = await Requester.post(`${BASE}/register`, { email, username, password }) as User
-        //add user data to jsonstore
-        const account = { ...user, address, state, city, zip, subscribed };
-        // cleanup sensitive data
-        delete account.accessToken
-        delete account.password
-        await Requester.post(`${STORE_BASE}/users`, account)
+        //add user data to our accounts collection (without password)
+        const account = { _id: user._id, email, username, address, state, city, zip, subscribed };
+        await Requester.doPowerRequest(
+            "POST",
+            {
+                "X-Authorization": `${user.accessToken}`,
+                "X-Admin": "true",  // users collection is protected
+            },
+            `${STORE_BASE}/users`,
+            account)
         return account
     }
 

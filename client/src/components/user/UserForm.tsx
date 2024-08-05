@@ -4,6 +4,7 @@ import { useForm } from '../../hooks/useForm';
 import Button from '../Button';
 import User from '../../model/User';
 import { useNavigate } from 'react-router-dom';
+import LabelLockable from '../common/LabelLockable';
 
 const initialValues = {
     email: '',
@@ -65,7 +66,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                 }
                 break;
             case "address":
-                if (values.address && values.address.length < 8) {
+                if (!values.address || values.address.length < 8) {
                     errors += "Address must be at least 8 characters long";
                 }
                 break;
@@ -156,9 +157,9 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                     <div className="card p-3">
                         <div className="form-row row">
                             <div className="form-group col-12 col-md-6">
-                                <label htmlFor="inputEmail">
-                                    Email {!isRegisterMode && <span>* cannot be changed</span>}
-                                </label>
+                                <LabelLockable isLocked={!isRegisterMode} htmlFor="inputEmail" >
+                                    Email
+                                </LabelLockable>
                                 <input
                                     type="email"
                                     name="email"
@@ -172,9 +173,9 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 />
                             </div>
                             <div className="form col-12 col-md-6">
-                                <label htmlFor="inputUsername">
-                                    Username {!isRegisterMode && <span>* cannot be changed</span>}
-                                </label>
+                                <LabelLockable isLocked={!isRegisterMode} htmlFor="inputUsername">
+                                    Username
+                                </LabelLockable>
                                 <input
                                     type="text"
                                     name="username"
@@ -188,9 +189,9 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 />
                             </div>
                             <div className="form-group col-12 col-md-6">
-                                <label htmlFor="inputPassword">
-                                    Password {!isRegisterMode && <span>* cannot be changed</span>}
-                                </label>
+                                <LabelLockable isLocked={!isRegisterMode} htmlFor="inputPassword">
+                                    Password
+                                </LabelLockable>
                                 <input
                                     type="password"
                                     name="password"
@@ -204,14 +205,14 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 />
                             </div>
                             <div className="form-group col-12 col-md-6">
-                                <label htmlFor="inputPassword">
-                                    Retype password {!isRegisterMode && <span>* cannot be changed</span>}
-                                </label>
+                                <LabelLockable isLocked={!isRegisterMode} htmlFor="rePassword">
+                                    Retype password
+                                </LabelLockable>
                                 <input
                                     type="password"
                                     name="rePassword"
                                     className="form-control"
-                                    id="inputPassword"
+                                    id="rePassword"
                                     placeholder="Password"
                                     value={values.rePassword}
                                     onChange={changeHandler}
@@ -281,6 +282,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                     id="gridCheck"
                                     name="subscribed"
                                     value=""
+                                    checked={values.subscribed}
                                     onChange={checkboxChangeHandler}
                                     onBlur={validateOnBlurHandler}
                                 />

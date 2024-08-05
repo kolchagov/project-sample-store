@@ -11,9 +11,12 @@ export function useForm<T>(initialValues: T,
         }
         // console.log(`debug me: ${e.target.name} -> ${e.target.value}`)
 
+        const value = e.target.type === 'checkbox' ?
+            (e.target as HTMLInputElement).checked : e.target.value
+
         setValues(prevState => ({
             ...prevState,
-            [e.target.name]: e.target.value,
+            [e.target.name]: value,
         }));
     };
 

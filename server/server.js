@@ -1352,14 +1352,17 @@
             "35c62d76-8152-4626-8712-eeb96381bea8": {
                 email: "peter@abv.bg",
                 username: "Peter",
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
             },
             "847ec027-f659-4086-8032-5173e2f9c93a": {
                 email: "george@abv.bg",
                 username: "George",
+                _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
             },
             "60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
                 email: "admin@abv.bg",
                 username: "Admin",
+                _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
             }
         },
         recipes: {
