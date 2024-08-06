@@ -100,6 +100,10 @@ Failing to meet any of the above requirements will result in an error message wi
     - Add shopping cart context and provider component
     - Add checkout page with order processing simulation
 - Add 404 - not found page 
+- Add rating/comments to product to all users
+    - Add new comment for authorized users
+    - Add edit comment for own comments
+    - Add delete comment for own comments
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user

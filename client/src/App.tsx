@@ -28,6 +28,9 @@ import ShoppingCart from './components/shopping-cart/ShoppingCart';
 import EditAccount from './components/user/edit-account/EditAccount';
 import Checkout from './components/checkout/Checkout';
 import NotFound from './components/not-found/NotFound';
+import Comments from './components/comments/Comments';
+import AddComment from './components/comments/add-comment/AddComment';
+import EditComment from './components/comments/edit-comment/EditComment';
 
 function App() {
   return (
@@ -41,6 +44,7 @@ function App() {
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/category/:categoryId' element={<Home />} />
+                <Route path='/comments/:productId' element={<Comments />} />
                 <Route path='/about' element={<About />} />
                 <Route path='/catalog' element={<ProductTable />} />
                 <Route path='/cart' element={<ShoppingCart />} />
@@ -53,6 +57,8 @@ function App() {
                   <Route path='/account' element={<EditAccount />} />
                   <Route path='/edit-user/:userId' element={<EditUser />} />
                   <Route path='/checkout' element={<Checkout />} />
+                  <Route path='/add-comment/:productId' element={<AddComment />} />
+                  <Route path='/edit-comment/:productId/:commentId' element={<EditComment />} />
                 </Route>
                 <Route element={<AdminGuard />}>
                   <Route path='/users' element={<UserTable />} />

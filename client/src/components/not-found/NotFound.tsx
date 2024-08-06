@@ -12,8 +12,8 @@ export default function NotFound() {
 
     return (
         <>
-            <div className="card m-2 p-3 vh33 d-flex justify-content-center">
-                <div className="card-title mb-4">
+            <div className="card m-2 p-3 d-flex justify-content-center">
+                <div className="card-title">
                     <h3 className='text-center default m-4 py-2'>
                         Page not found
                     </h3>
@@ -26,7 +26,7 @@ export default function NotFound() {
                     <p className='text-center'>
                         But you can go back to the home page.
                     </p>
-                    <div className="row div col-auto mx-4">
+                    <div className="row div col-auto m-4">
                         <Button
                             color='prominent'
                             onClickHandler={navigateHomeHandler}
