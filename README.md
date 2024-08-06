@@ -121,6 +121,7 @@ Failing to meet any of the above requirements will result in an error message wi
 - Add get product by id
 - Add update product
 - Moved price formatter into Product service
+- Add delete product
 ## 7. Add route guards
 - Add admin guard
 - Add private guard

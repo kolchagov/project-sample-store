@@ -15,7 +15,6 @@ export default function useProducts() {
 
     const setCategoryId = (categoryId: string | undefined) => {
         ProductService.getProducts(categoryId).then(catalog => {
-            console.log("debug me: ", catalog);
             setProducts(() => catalog)
         })
     }

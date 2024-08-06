@@ -37,6 +37,12 @@ class ProductService {
         return persistedProduct
     }
 
+    static async deleteProduct(productId: string | null) {
+        if (!productId) return
+        // returns {_deletedon: ...}
+        await Requester.del(`${BASE_URL}/catalog/${productId}`);
+    }
+
     static async updateProduct(productId: string,
         {
             img,

@@ -9,8 +9,6 @@ export default function useCart() {
         setItems(prev => {
             const existingItem = prev.find(item => item._id === product._id)
             if (existingItem) {
-                console.log("debug me add existing");
-
                 existingItem.count += count
                 return [...prev]
             }

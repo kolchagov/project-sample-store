@@ -31,7 +31,12 @@ export default function ProductTable() {
     }
 
     const deleteProduct = async () => {
-        // TODO
+        const id = productIdRef.current
+        if (!id) return
+        await ProductService.deleteProduct(id)
+        productIdRef.current = null
+        setPrompt(() => '')
+        setProducts(() => products.filter(p => p._id !== id))
     }
 
     const cancelDeleteProduct = async () => {
