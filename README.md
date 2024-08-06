@@ -99,6 +99,7 @@ Failing to meet any of the above requirements will result in an error message wi
 - Add shopping cart page
     - Add shopping cart context and provider component
     - Add checkout page with order processing simulation
+- Add 404 - not found page 
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
@@ -123,6 +124,7 @@ Failing to meet any of the above requirements will result in an error message wi
 ## 7. Add route guards
 - Add admin guard
 - Add private guard
+- Add logged user guard around login and register routes
 ## 8. Implement shopping cart custom hook
 - Add item into cart
 - Calculate item amount

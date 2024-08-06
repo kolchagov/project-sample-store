@@ -23,9 +23,11 @@ import EditProduct from './components/products/edit-product/EditProduct';
 import CreateProduct from './components/products/create-product/CreateProduct';
 import AdminGuard from './components/common/AdminGuard';
 import PrivateGuard from './components/common/PrivateGuard';
+import LoggedUserGuard from './components/common/LoggedUserGuard';
 import ShoppingCart from './components/shopping-cart/ShoppingCart';
 import EditAccount from './components/user/edit-account/EditAccount';
 import Checkout from './components/checkout/Checkout';
+import NotFound from './components/not-found/NotFound';
 
 function App() {
   return (
@@ -40,11 +42,13 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path='/category/:categoryId' element={<Home />} />
                 <Route path='/about' element={<About />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/register-user' element={<RegisterUser />} />
                 <Route path='/catalog' element={<ProductTable />} />
                 <Route path='/cart' element={<ShoppingCart />} />
                 <Route path='/logout' element={<Logout />} />
+                <Route element={<LoggedUserGuard />}>
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/register-user' element={<RegisterUser />} />
+                </Route>
                 <Route element={<PrivateGuard />}>
                   <Route path='/account' element={<EditAccount />} />
                   <Route path='/edit-user/:userId' element={<EditUser />} />
@@ -58,6 +62,7 @@ function App() {
                   <Route path='/create-product' element={<CreateProduct />} />
                   <Route path='/edit-product/:productId' element={<EditProduct />} />
                 </Route>
+                <Route path='*' element={<NotFound />} />
               </Routes>
             </div>
           </CategoryConextProvider>
