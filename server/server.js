@@ -1419,12 +1419,29 @@
             }
         },
         comments: {
-            "0a272c58-b7ea-4e09-a000-7ec988248f66": {
-                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
-                content: "Great recipe!",
-                recipeId: "8f414b4f-ab39-4d36-bedb-2ad69da9c830",
-                _createdOn: 1614260681375,
-                _id: "0a272c58-b7ea-4e09-a000-7ec988248f66"
+            "43f8ffb6-a092-439f-b716-0ec622836e2d": {
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "productId": "7c9e771d-a33a-428c-bca3-4f8b0606cbb3",
+                "rating": "1",
+                "content": "Crappy, cheap laptop",
+                "_createdOn": 1722977846471,
+                "_id": "43f8ffb6-a092-439f-b716-0ec622836e2d"
+            },
+            "6c93117c-554d-4679-9fc1-6b836852c12a": {
+                "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "productId": "7c9e771d-a33a-428c-bca3-4f8b0606cbb3",
+                "rating": "4",
+                "content": "not bad",
+                "_createdOn": 1722980263369,
+                "_id": "6c93117c-554d-4679-9fc1-6b836852c12a"
+            },
+            "58fdd0bf-f049-40c4-9896-7c552d00074d": {
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "productId": "17e5e64a-c97f-4e25-a845-b1a40325b105",
+                "rating": "5",
+                "content": "Mine was very good",
+                "_createdOn": 1722980580595,
+                "_id": "58fdd0bf-f049-40c4-9896-7c552d00074d"
             }
         },
         records: {
