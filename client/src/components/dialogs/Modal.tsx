@@ -20,12 +20,11 @@ export default function Modal({ dismissModal, children, extraClass, title }: Mod
             });
             gallery.show()
         }
+        return () => {
+            //unmount component
+            gallery?.hide()
+        }
     }, [])
-
-    function closeModalDialog() {
-        gallery?.hide()
-        dismissModal()
-    }
 
     return (
         <>
@@ -44,7 +43,7 @@ export default function Modal({ dismissModal, children, extraClass, title }: Mod
                             {children}
                         </section>
                         <div className="modal-footer">
-                            <Button color='prominent' outline='1' onClickHandler={closeModalDialog}>Close</Button>
+                            <Button color='prominent' outline='1' onClickHandler={dismissModal}>Close</Button>
                         </div>
                     </div>
                 </div>
