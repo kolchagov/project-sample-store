@@ -28,7 +28,10 @@ export default function EditUser() {
             setUser(() => updatedUser)
             // special case: update logged user
             if (updatedUser._id === authUser._id) {
-                switchAuth({ ...updatedUser, accessToken: authUser.accessToken })
+                switchAuth({
+                    ...updatedUser,
+                    accessToken: authUser.accessToken
+                })
             }
             UserService.isAdmin(authUser) ?
                 navigate('/users') : navigate('/')
@@ -50,7 +53,11 @@ export default function EditUser() {
                     <div className="card my-2">
                         <div className="card-text p-2">
                             <h3>Edit user <strong>{user.username}</strong></h3>
-                            <UserForm user={user} isRegisterMode={false} submitCallback={submitHandler} />
+                            <UserForm
+                                user={user}
+                                isRegisterMode={false}
+                                submitCallback={submitHandler}
+                            />
                         </div>
                     </div>
                 </div>
