@@ -30,7 +30,7 @@ export default function EditUser() {
             if (updatedUser._id === authUser._id) {
                 switchAuth({ ...updatedUser, accessToken: authUser.accessToken })
             }
-            UserService.isAdmin(updatedUser) ?
+            UserService.isAdmin(authUser) ?
                 navigate('/users') : navigate('/')
         }).catch(error => {
             setErrorMessage(error.message)
