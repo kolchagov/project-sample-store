@@ -39,7 +39,7 @@ export default function useAccount() {
         console.log("debug me", newUser);
         setUser(() => newUser)
     }
-    return { user, login, logout, switchAuth, isAuthenticated }
+    return { user, setUser, login, logout, switchAuth, isAuthenticated }
 
 
 }

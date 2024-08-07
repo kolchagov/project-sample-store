@@ -173,9 +173,9 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 />
                             </div>
                             <div className="form col-12 col-md-6">
-                                <LabelLockable isLocked={!isRegisterMode} htmlFor="inputUsername">
+                                <label htmlFor="inputUsername">
                                     Username
-                                </LabelLockable>
+                                </label>
                                 <input
                                     type="text"
                                     name="username"
@@ -185,7 +185,6 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                     value={values.username}
                                     onChange={changeHandler}
                                     onBlur={validateOnBlurHandler}
-                                    readOnly={!isRegisterMode}
                                 />
                             </div>
                             <div className="form-group col-12 col-md-6">

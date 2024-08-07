@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { UserContext } from '../../../contexts/AuthContextProvider';
 import UserService from '../../../services/UserService'
 
 import UserForm from '../UserForm'
@@ -12,6 +13,7 @@ export default function EditUser() {
         navigate = useNavigate(),
         [user, setUser] = useState({} as User)
     const [errorMessage, setErrorMessage] = useState('')
+    const { user: authUser, switchAuth } = useContext(UserContext)
 
     useEffect(() => {
         UserService.getUser(userId).then(currentUser => {
@@ -24,6 +26,10 @@ export default function EditUser() {
     const submitHandler = (values: User) => {
         UserService.updateUser(values).then(updatedUser => {
             setUser(() => updatedUser)
+            // special case: update logged user
+            if (updatedUser._id === authUser._id) {
+                switchAuth({ ...updatedUser, accessToken: authUser.accessToken })
+            }
             UserService.isAdmin(updatedUser) ?
                 navigate('/users') : navigate('/')
         }).catch(error => {

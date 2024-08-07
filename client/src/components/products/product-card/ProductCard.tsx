@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ShoppingCartContext } from "../../../contexts/ShoppingCartContext";
+import { UserContext } from "../../../contexts/AuthContextProvider";
 
 import ProductService from '../../../services/ProductService';
 import Product from "../../../model/Product";
@@ -10,8 +11,6 @@ import Button from "../../Button";
 import ProductCountBadge from "./ProductCountBadge";
 
 import "./ProductCard.css";
-import { UserContext } from "../../../contexts/AuthContextProvider";
-import Comments from "../../comments/Comments";
 
 type ProductCardProps = {
     product: Product

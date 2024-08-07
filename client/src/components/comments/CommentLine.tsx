@@ -16,6 +16,15 @@ export default function CommentLine({ comment, deleteHandler, editHandler }:
     const { user } = React.useContext(UserContext)
     const [prompt, setPrompt] = React.useState('')
 
+    const dateFormat = (millis: number | undefined) => {
+        if (millis) {
+            const date = new Date(millis)
+            return date.toLocaleDateString('bg-BG') +
+                ' ' + date.toLocaleTimeString('bg-BG')
+        }
+        return ''
+    }
+
     const deleteBtnClickHandler = () => {
         setPrompt(() => `Are you sure you want to remove comment "${comment.content}"?`)
     }
@@ -46,9 +55,14 @@ export default function CommentLine({ comment, deleteHandler, editHandler }:
             }
             <div className="alert alert-light  align-items-center">
                 <div className="row">
+                    <div className="form-text">
+                        At {dateFormat(comment._createdOn)}
+                    </div>
                     <section className='col-10'>
                         <span className='badge mx-2 text-bg-secondary'>
-                            {comment.author?.username} gave rating: {comment.rating}
+                            <strong>{comment.author?.username}</strong>
+                            &nbsp; gave rating:
+                            <strong> {comment.rating} </strong>
                         </span >
                         {comment.content}
                     </section>

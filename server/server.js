@@ -1350,9 +1350,16 @@
         },
         users: {
             "35c62d76-8152-4626-8712-eeb96381bea8": {
-                email: "peter@abv.bg",
-                username: "Peter",
-                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                "_id": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "email": "peter@abv.bg",
+                "username": "Peter",
+                "address": "Peter street 1",
+                "state": "Pazardzhik",
+                "city": "Pazardzhik",
+                "zip": "4600",
+                "subscribed": false,
+                "_updatedOn": 1723037839741,
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8"
             },
             "847ec027-f659-4086-8032-5173e2f9c93a": {
                 email: "george@abv.bg",
@@ -1360,9 +1367,16 @@
                 _ownerId: "847ec027-f659-4086-8032-5173e2f9c93a",
             },
             "60f0cf0b-34b0-4abd-9769-8c42f830dffc": {
-                email: "admin@abv.bg",
-                username: "Admin",
-                _ownerId: "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "_id": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "email": "admin@abv.bg",
+                "username": "Admin",
+                "address": "Sofia 23",
+                "state": "Shumen",
+                "city": "Shumen",
+                "zip": "9700",
+                "subscribed": false,
+                "_ownerId": "60f0cf0b-34b0-4abd-9769-8c42f830dffc",
+                "_updatedOn": 1723040591731
             }
         },
         recipes: {
