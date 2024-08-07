@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ShoppingCartContext } from "../../../contexts/ShoppingCartContext";
-import { UserContext } from "../../../contexts/AuthContextProvider";
 
 import ProductService from '../../../services/ProductService';
 import Product from "../../../model/Product";
@@ -17,7 +16,6 @@ type ProductCardProps = {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-    const { user } = useContext(UserContext)
     const { addCartItem } = useContext(ShoppingCartContext)
     const [euros, cents] = ProductService.getFormattedPrice(product.price),
         [isShowDetails, setIsShowDetails] = useState(false),
@@ -27,10 +25,6 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     if (title.length > 40) {
         title = title.substring(0, 40) + '...';
-    }
-
-    function addComment() {
-
     }
 
     function addToCartClickHandler() {

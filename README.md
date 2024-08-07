@@ -144,4 +144,5 @@ Failing to meet any of the above requirements will result in an error message wi
 # 10. Implement unit tests
 - Configure vitest
 - Create truty test
-- Create CommentForm  component test
+- Create CommentForm component tests
+- Create UserForm component tests

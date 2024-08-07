@@ -29,8 +29,7 @@ const bulgariaStates = [
 export default function UserForm({ isRegisterMode, user, submitCallback, submitBtnText = 'Save' }:
     {
         isRegisterMode: boolean,
-        user?:
-        User,
+        user?: User,
         submitCallback:
         (user: User) => void,
         submitBtnText?: string
@@ -165,6 +164,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                     name="email"
                                     className="form-control"
                                     id="inputEmail"
+                                    data-testid="email"
                                     placeholder="Email"
                                     value={values.email}
                                     onChange={emailinputChangeHandler}
@@ -180,6 +180,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                     type="text"
                                     name="username"
                                     className="form-control"
+                                    data-testid="username"
                                     id="inputUsername"
                                     placeholder="Username"
                                     value={values.username}
@@ -194,6 +195,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 <input
                                     type="password"
                                     name="password"
+                                    data-testid="password"
                                     className="form-control"
                                     id="inputPassword"
                                     placeholder="Password"
@@ -211,6 +213,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                     type="password"
                                     name="rePassword"
                                     className="form-control"
+                                    data-testid="rePassword"
                                     id="rePassword"
                                     placeholder="Password"
                                     value={values.rePassword}
@@ -224,6 +227,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                             <label htmlFor="inputAddress">Address</label>
                             <input
                                 type="text"
+                                data-testid="address"
                                 name="address"
                                 className="form-control"
                                 id="inputAddress"
@@ -239,6 +243,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 <select id="inputState"
                                     className="form-control"
                                     name='state'
+                                    data-testid='state'
                                     value={values.state}
                                     onChange={stateSelectChangeHandler}
                                     onBlur={validateOnBlurHandler}
@@ -254,6 +259,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 <input type="text"
                                     className="form-control"
                                     id="inputCity"
+                                    data-testid="city"
                                     name="city"
                                     value={values.city}
                                     onChange={changeHandler}
@@ -266,6 +272,7 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                     type="text"
                                     className="form-control"
                                     id="inputZip"
+                                    data-testid="zip"
                                     name="zip"
                                     value={values.zip}
                                     onChange={changeHandler}
@@ -278,14 +285,15 @@ export default function UserForm({ isRegisterMode, user, submitCallback, submitB
                                 <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    id="gridCheck"
+                                    data-testid="subscribe"
+                                    id="subscribeCheck"
                                     name="subscribed"
                                     value=""
                                     checked={values.subscribed}
                                     onChange={checkboxChangeHandler}
                                     onBlur={validateOnBlurHandler}
                                 />
-                                <label className="form-check-label" htmlFor="gridCheck">
+                                <label className="form-check-label" htmlFor="subscribeCheck">
                                     Subscribe for our newsletter (optional)
                                 </label>
                             </div>
