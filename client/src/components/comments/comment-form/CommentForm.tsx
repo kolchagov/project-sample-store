@@ -4,6 +4,7 @@ import { useForm } from '../../../hooks/useForm'
 import { CommentType } from '../../../services/CommentsService'
 
 import Button from '../../Button'
+import ErrorsAlert from '../../common/ErrorsAlert'
 
 const initialValues = { productId: '', rating: 0, content: '' }
 
@@ -14,6 +15,15 @@ export default function CommentForm({ productId, comment, confirmHandler, cancel
         confirmHandler: (values: CommentType) => void,
         cancelHandler?: () => void
     }) {
+    const [errors, setErrors] = React.useState<{ [key: string]: string }>({})
+
+    const validate = () => {
+        const errors: { [key: string]: string } = {}
+        if (values.content.length < 5) {
+            errors.content = 'Comment must be at least 5 characters long'
+        }
+        return errors
+    }
 
     const {
         values,
@@ -23,7 +33,13 @@ export default function CommentForm({ productId, comment, confirmHandler, cancel
     } = useForm<CommentType>(
         Object.assign(initialValues, { productId }),
         (values) => {
-            confirmHandler(values)
+            const err = validate()
+            setErrors(err)
+            if (Object.keys(err).length === 0) {
+                confirmHandler(values)
+            } else {
+                setErrors(err)
+            }
         })
 
     useEffect(() => {
@@ -52,6 +68,7 @@ export default function CommentForm({ productId, comment, confirmHandler, cancel
                             name="rating"
                             value={values.rating}
                             onChange={changeHandler}
+                            onBlur={() => setErrors(validate())}
                         />
                     </div>
                 </div>
@@ -64,6 +81,7 @@ export default function CommentForm({ productId, comment, confirmHandler, cancel
                         rows={3}
                         value={values.content}
                         onChange={changeHandler}
+                        onBlur={() => setErrors(validate())}
                         placeholder='Your comment'
                     >
                     </textarea>
@@ -83,6 +101,7 @@ export default function CommentForm({ productId, comment, confirmHandler, cancel
                         </Button>
                     </div>
                 </div>
+                <ErrorsAlert errors={errors} />
             </form>
         </>
     )

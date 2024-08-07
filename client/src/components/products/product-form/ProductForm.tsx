@@ -6,7 +6,7 @@ import { useForm } from '../../../hooks/useForm';
 import Product from '../../../model/Product'
 import Button from '../../Button';
 import CategorySelector from '../../categories/category-selector/CategorySelector';
-import ErrorsAlert from './ErrorsAlert';
+import ErrorsAlert from '../../common/ErrorsAlert';
 
 const initialValues = {
     make: "",

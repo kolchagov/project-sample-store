@@ -104,6 +104,7 @@ Failing to meet any of the above requirements will result in an error message wi
     - Add new comment for authorized users
     - Add edit comment for own comments
     - Add delete comment for own comments
+    - Add validation for comment
 ## 4. Service implementations
 - User service implementation: user login
     - Register new user
@@ -140,3 +141,6 @@ Failing to meet any of the above requirements will result in an error message wi
 - Add custom hook for filtering products by category
 - Add route with parameters
 - Add handler for category change
+# 10. Implement unit tests
+- Configure vitest
+- Create truty test
