@@ -6,16 +6,15 @@ import { useForm } from '../../../hooks/useForm';
 import Product from '../../../model/Product'
 import Button from '../../Button';
 import CategorySelector from '../../categories/category-selector/CategorySelector';
+import ErrorsAlert from './ErrorsAlert';
 
 const initialValues = {
-    name: "",
-    price: 0,
-    categoryId: "default",
-    details: "",
-    description: "",
-    img: "",
     make: "",
     model: "",
+    price: 0,
+    categoryId: "default",
+    description: "",
+    img: "",
     material: "",
     year: new Date().getFullYear(),
 }
@@ -23,12 +22,44 @@ const initialValues = {
 export default function ProductForm({ product, submitCallback }:
     { product: Product, submitCallback: (p: Product) => void }) {
     const navigate = useNavigate()
+    const [errors, setErrors] = useState({} as any)
+
+    const validate = () => {
+        const errors = {} as any
+
+        if (!values.price) {
+            errors.price = 'Price is required'
+        }
+        if (!values.description) {
+            errors.description = 'Description is required'
+        }
+        if (!values.img) {
+            errors.img = 'Image is required'
+        }
+        if (!values.make) {
+            errors.make = 'Make is required'
+        }
+        if (!values.model) {
+            errors.model = 'Model is required'
+        }
+        if (!values.year) {
+            errors.year = 'Year is required'
+        }
+        return errors
+    }
 
     const {
         values,
         submitHandler,
         changeHandler
-    } = useForm(Object.assign(initialValues, product), submitCallback);
+    } = useForm(Object.assign(initialValues, product), (values) => {
+        const errors = validate();
+        if (Object.keys(errors).length) {
+            setErrors(errors)
+            return
+        }
+        submitCallback(values)
+    });
 
     const [imageSrc, setImageSrc] = useState(values.img)
 
@@ -39,6 +70,16 @@ export default function ProductForm({ product, submitCallback }:
     useEffect(() => {
         updateImage()
     }, [product.img])
+
+    const onblurHandler = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const name = e.target.name,
+            errors = validate()
+        if (errors[name]) {
+            setErrors(() => {
+                return { [name]: errors[name] }
+            })
+        }
+    }
 
     return (
         <>
@@ -58,6 +99,7 @@ export default function ProductForm({ product, submitCallback }:
                                     value={values.make}
                                     onChange={changeHandler}
                                     name='make'
+                                    onBlur={onblurHandler}
                                 />
                             </div>
                         </div>
@@ -75,6 +117,7 @@ export default function ProductForm({ product, submitCallback }:
                                     value={values.model}
                                     onChange={changeHandler}
                                     name='model'
+                                    onBlur={onblurHandler}
                                 />
                             </div>
                         </div>
@@ -82,7 +125,8 @@ export default function ProductForm({ product, submitCallback }:
                     <div className="form-row row">
                         <div className="form-group col-md-4 mb-3">
                             <label htmlFor="materialInput" className="form-label">
-                                Material
+                                Material&nbsp;
+                                <span className='badge text-bg-secondary'>optional</span>
                             </label>
                             <input
                                 type="text"
@@ -108,6 +152,7 @@ export default function ProductForm({ product, submitCallback }:
                                 name='year'
                                 value={values.year}
                                 onChange={changeHandler}
+                                onBlur={onblurHandler}
                             />
                         </div>
                         <div className="form-group col-md-4 mb-3">
@@ -137,6 +182,7 @@ export default function ProductForm({ product, submitCallback }:
                                 name='price'
                                 value={values.price}
                                 onChange={changeHandler}
+                                onBlur={onblurHandler}
                             />
                         </div>
                     </div>
@@ -194,10 +240,12 @@ export default function ProductForm({ product, submitCallback }:
                                 name="description"
                                 onChange={changeHandler}
                                 value={values.description}
+                                onBlur={onblurHandler}
                             >
                             </textarea>
                         </div>
                     </div>
+                    <ErrorsAlert errors={errors} />
                     <div className="d-flex mt-3">
                         <Button color='prominent' type='submit' className='mx-2'>Save</Button>
                         <Button color='default' onClickHandler={() => navigate("/catalog")}>Cancel</Button>
